@@ -21,6 +21,23 @@
     </script>
 
     <style>
+        .navbar-default {
+            background-color: #2c3e50;
+            border-color: transparent;
+        }
+
+        .navbar-default .navbar-brand {
+            color: #ffffff;
+        }
+        .navbar-default .navbar-nav>li>a {
+            color: #ffffff;
+        }
+        .navbar-default .navbar-nav>li>a:hover {
+            color: greenyellow;
+        }
+
+
+
         ul li:hover ul {
             display: block;
         }
@@ -59,6 +76,9 @@
                         <li><a href="{{ url('/register') }}">Register</a></li>
                     @else
                         <li><a href="{{ url('/home') }}">Home</a></li>
+                        <li><a href="{{ url('/class') }}">Class</a></li>
+                        <li><a href="{{ url('/section') }}">Section</a></li>
+                        <li><a href="{{ url('/year') }}">Year</a></li>
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                                 {{ Auth::user()->name }} <span class="caret"></span>
