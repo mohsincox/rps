@@ -1,8 +1,11 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container">
-        <h2>Class Registration</h2>
+
+        <h1>
+                <i class="fa fa-pencil"></i>
+                Class Registration
+        </h1>
         @include('class._form')
-    </div>
+
 @endsection

@@ -12,6 +12,8 @@
 
     <!-- Styles -->
     <link href="/css/app.css" rel="stylesheet">
+    <link href="/css/style.css" rel="stylesheet">
+    <link href="/css/font-awesome.min.css" rel="stylesheet">
 
     <!-- Scripts -->
     <script>
@@ -20,28 +22,6 @@
         ]); ?>
     </script>
 
-    <style>
-        .navbar-default {
-            background-color: #2c3e50;
-            border-color: transparent;
-        }
-
-        .navbar-default .navbar-brand {
-            color: #ffffff;
-        }
-        .navbar-default .navbar-nav>li>a {
-            color: #ffffff;
-        }
-        .navbar-default .navbar-nav>li>a:hover {
-            color: greenyellow;
-        }
-
-
-
-        ul li:hover ul {
-            display: block;
-        }
-    </style>
 </head>
 <body>
     <nav class="navbar navbar-default navbar-static-top">
@@ -103,8 +83,17 @@
             </div>
         </div>
     </nav>
+    {{--@include('flash::message')--}}
+    {{--@yield('content')--}}
+    <div class="container">
+        <div class="row">
+            @include('flash::message')
 
-    @yield('content')
+            <div class="col-md-12">
+                @yield('content')
+            </div>
+        </div>
+    </div>
 
     <!-- Scripts -->
     <script src="/js/app.js"></script>
