@@ -3,7 +3,9 @@
 @section('content')
     <h1>
         <i class="fa fa-pencil"></i>
-        Class Registration
+        Year Registration
     </h1>
-    @include('class._form')
+    @include('year._form')
 @endsection
+    
+

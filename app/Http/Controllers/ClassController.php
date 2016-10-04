@@ -10,6 +10,11 @@ use App\Http\Requests\ClassRequest;
 
 class ClassController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function index()
     {
         $classes = Classes::get();
@@ -23,7 +28,6 @@ class ClassController extends Controller
 
     public function store(ClassRequest $request)
     {
-//        return $request->all();
         $class = Classes::create($request->all());
 
         flash()->message($class->name . ' Successfully Created');
