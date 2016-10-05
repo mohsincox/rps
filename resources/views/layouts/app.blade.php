@@ -97,5 +97,6 @@
 
     <!-- Scripts -->
     <script src="/js/app.js"></script>
+    {!! Html::script('js/jquery-3.1.1.min.js') !!}
 </body>
 </html>

@@ -10,8 +10,8 @@ class Student extends Model
 
     protected $fillable = [
         'name',
-        'roll',
-        'class_id',
+        'roll_no',
+        'level_id',
         'section_id',
         'year_id',
         'father_name',
@@ -20,18 +20,18 @@ class Student extends Model
         'image'
     ];
 
-    public function classes()
+    public function level()
     {
-        $this->belongsTo(Classes::class);
+        return $this->belongsTo(Level::class);
     }
 
     public function section()
     {
-        $this->belongsTo(Section::class);
+        return $this->belongsTo(Section::class);
     }
 
     public function year()
     {
-        $this->belongsTo(Year::class);
+        return $this->belongsTo(Year::class);
     }
 }

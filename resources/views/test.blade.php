@@ -1,86 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <script class="jsbin" src="js/jquery-3.1.1.min.js"></script>
 
 
-<style>
-
-    /*body {*/
-        /*font-family: 'Lucida Grande', 'Helvetica Neue', Helvetica, Arial, sans-serif;*/
-        /*padding: 20px 50px 150px;*/
-        /*font-size: 13px;*/
-        /*text-align: center;*/
-        /*background: #E3CAA1;*/
-    /*}*/
-
-    ul {
-        text-align: left;
-        display: inline;
-        margin: 0;
-        padding: 15px 4px 17px 0;
-        list-style: none;
-        -webkit-box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
-        -moz-box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
-        box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
-    }
-    ul li {
-        font: bold 12px/18px sans-serif;
-        display: inline-block;
-        margin-right: -4px;
-        position: relative;
-        padding: 15px 20px;
-        background: #fff;
-        cursor: pointer;
-        -webkit-transition: all 0.2s;
-        -moz-transition: all 0.2s;
-        -ms-transition: all 0.2s;
-        -o-transition: all 0.2s;
-        transition: all 0.2s;
-    }
-    ul li:hover {
-        background: #555;
-        color: #fff;
-    }
-    ul li ul {
-        padding: 0;
-        position: absolute;
-        top: 48px;
-        left: 0;
-        width: 150px;
-        -webkit-box-shadow: none;
-        -moz-box-shadow: none;
-        box-shadow: none;
-        display: none;
-        opacity: 0;
-        visibility: hidden;
-        -webkit-transiton: opacity 0.2s;
-        -moz-transition: opacity 0.2s;
-        -ms-transition: opacity 0.2s;
-        -o-transition: opacity 0.2s;
-        -transition: opacity 0.2s;
-    }
-    ul li ul li {
-        background: #555;
-        display: block;
-        color: #fff;
-        text-shadow: 0 -1px 0 #000;
-    }
-    ul li ul li:hover { background: #666; }
-    ul li:hover ul {
-        display: block;
-        opacity: 1;
-        visibility: visible;
-    }
-</style>
 
 
-<ul><li>Home</li>
-    <li>About</li>
-    <li>
-        Portfolio
-        <ul>
-            <li>Web Design</li>
-            <li>Web Development</li>
-            <li>Illustrations</li>
-        </ul>
-    </li>
-    <li>Blog</li>
-    <li>Contact</li>
-</ul>
+</head>
+<body>
+<input type='file' onchange="readURL(this);" />
+<img id="blah" src="#" alt="your image" />
+</body>
+</html>
+
+<script>
+    function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $('#blah')
+                        .attr('src', e.target.result)
+                        .width(150)
+                        .height(200);
+            };
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+</script>

@@ -24,7 +24,11 @@ class StudentRequest extends FormRequest
     public function rules()
     {
         return [
-
+            'name' => 'required',
+            'roll_no' => 'required',
+            'level_id' => 'required',
+            'section_id' => 'required',
+            'year_id' => 'required'
         ];
     }
 }

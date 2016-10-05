@@ -24,7 +24,7 @@ class ClassRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|unique:classes,name,' . $this->route('class')
+            'name' => 'required|unique:levels,name,' . $this->route('class')
         ];
     }
 }

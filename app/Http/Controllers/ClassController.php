@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Classes;
+use App\Models\Level;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -17,7 +18,7 @@ class ClassController extends Controller
 
     public function index()
     {
-        $classes = Classes::get();
+        $classes = Level::get();
         return view('class.index', compact('classes'));
     }
 
@@ -28,7 +29,7 @@ class ClassController extends Controller
 
     public function store(ClassRequest $request)
     {
-        $class = Classes::create($request->all());
+        $class = Level::create($request->all());
 
         flash()->message($class->name . ' Successfully Created');
 
@@ -37,14 +38,14 @@ class ClassController extends Controller
 
     public function edit($id)
     {
-        $class = Classes::find($id);
+        $class = Level::find($id);
 
         return view('class.edit', compact('class'));
     }
 
     public function update(ClassRequest $request, $id)
     {
-        $class = Classes::find($id);
+        $class = Level::find($id);
         $class->update($request->all());
 
         flash()->message('Successfully Updated');

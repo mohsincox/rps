@@ -22,3 +22,4 @@ Route::get('/test', 'TestController@index');
 Route::resource('/class', 'ClassController');
 Route::resource('/year', 'YearController');
 Route::resource('/section', 'SectionController');
+Route::resource('/student', 'StudentController');
