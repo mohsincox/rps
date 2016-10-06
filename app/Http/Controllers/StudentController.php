@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Requests\StudentRequest;
 use Illuminate\Support\Facades\Input;
+use File;
 
 class StudentController extends Controller
 {
@@ -54,33 +55,33 @@ class StudentController extends Controller
                     'image' => $request->image
                 ]
             );
-        } else {
-
+        }
+        else {
             if (Input::file('image')->isValid()) {
                 $destinationPath = 'uploads';
                 $extension = Input::file('image')->getClientOriginalExtension();
                 $fileName = rand(11111, 99999) . '.' . $extension;
                 Input::file('image')->move($destinationPath, $fileName);
-            } else {
+            }
+            else {
                 flash()->error('uploaded file is not valid');
 
                 return redirect()->back();
-        }
-
-        $student = Student::create(
-            [
-                'name' => $request->name,
-                'roll_no' => $request->roll_no,
-                'level_id' => $request->level_id,
-                'section_id' => $request->section_id,
-                'year_id' => $request->year_id,
-                'father_name' => $request->father_name,
-                'mother_name' => $request->mother_name,
-                'address' => $request->address,
-                'image' => $fileName
-            ]
-        );
-    }
+                }
+                $student = Student::create(
+                    [
+                        'name' => $request->name,
+                        'roll_no' => $request->roll_no,
+                        'level_id' => $request->level_id,
+                        'section_id' => $request->section_id,
+                        'year_id' => $request->year_id,
+                        'father_name' => $request->father_name,
+                        'mother_name' => $request->mother_name,
+                        'address' => $request->address,
+                        'image' => $fileName
+                    ]
+                );
+            }
         flash()->message($student->name . ' Successfully Created');
 
         return redirect('student');
@@ -89,6 +90,61 @@ class StudentController extends Controller
     public function edit($id)
     {
         $student = Student::find($id);
+        $classList = Level::pluck('name', 'id');
+        $sectionList = Section::pluck('name', 'id');
+        $yearList = Year::pluck('year', 'id');
 
+        return view('student.edit', compact('student', 'classList', 'sectionList', 'yearList'));
+    }
+
+    public function update(StudentRequest $request, $id)
+    {
+        //return $request->all();
+        $student = Student::find($id);
+        File::delete('uploads/' . $student->image);
+        if ($request->image == '') {
+            $student->update(
+                [
+                    'name' => $request->name,
+                    'roll_no' => $request->roll_no,
+                    'level_id' => $request->level_id,
+                    'section_id' => $request->section_id,
+                    'year_id' => $request->year_id,
+                    'father_name' => $request->father_name,
+                    'mother_name' => $request->mother_name,
+                    'address' => $request->address,
+                    'image' => $request->image
+                ]
+            );
+        }
+        else {
+            if (Input::file('image')->isValid()) {
+                $destinationPath = 'uploads';
+                $extension = Input::file('image')->getClientOriginalExtension();
+                $fileName = rand(11111, 99999) . '.' . $extension;
+                Input::file('image')->move($destinationPath, $fileName);
+            }
+            else {
+                flash()->error('uploaded file is not valid');
+
+                return redirect()->back();
+            }
+            $student->update(
+                [
+                    'name' => $request->name,
+                    'roll_no' => $request->roll_no,
+                    'level_id' => $request->level_id,
+                    'section_id' => $request->section_id,
+                    'year_id' => $request->year_id,
+                    'father_name' => $request->father_name,
+                    'mother_name' => $request->mother_name,
+                    'address' => $request->address,
+                    'image' => $fileName
+                ]
+            );
+        }
+        flash()->message($student->name . ' Successfully Created');
+
+        return redirect('student');
     }
 }
