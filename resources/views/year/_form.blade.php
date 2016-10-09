@@ -6,7 +6,7 @@
 <div class="required form-group {{ $errors->has('year') ? 'has-error' : ''}}">
     {!! Form::label('year', 'Year', ['class' => 'col-sm-3 control-label']) !!}
     <div class="col-sm-9">
-        {!! Form::number('year', null, ['class' => 'form-control', 'placeholder' => 'Enter Class Year', 'autocomplete' => 'off', 'required']) !!}
+        {!! Form::number('year', null, ['class' => 'form-control', 'placeholder' => 'Enter Year', 'autocomplete' => 'off', 'required']) !!}
         <span class="text-danger">
 			    {{ $errors->first('year') }}
 		    </span>

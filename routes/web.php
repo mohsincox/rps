@@ -23,3 +23,5 @@ Route::resource('/class', 'ClassController');
 Route::resource('/year', 'YearController');
 Route::resource('/section', 'SectionController');
 Route::resource('/student', 'StudentController');
+Route::resource('/term', 'TermController');
+Route::resource('/subject', 'SubjectController');
