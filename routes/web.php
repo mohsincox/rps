@@ -25,3 +25,8 @@ Route::resource('/section', 'SectionController');
 Route::resource('/student', 'StudentController');
 Route::resource('/term', 'TermController');
 Route::resource('/subject', 'SubjectController');
+Route::post('/result/add-to-cart', 'ResultController@addToCart');
+Route::get('/result/remove-list/{id?}', 'ResultController@removeList');
+Route::get('/result/clear-all-lists', 'ResultController@clearAllLists');
+Route::post('/result/save-cart', 'ResultController@saveCart');
+Route::resource('/result', 'ResultController');

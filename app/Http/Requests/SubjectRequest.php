@@ -24,7 +24,7 @@ class SubjectRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|unique:subjects,name' . $this->route('subject'),
+            'name' => 'required|unique:subjects,name,' . $this->route('subject'),
             'total_mark' => 'required',
             'pass_mark' => 'required'
         ];
