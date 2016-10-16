@@ -12,7 +12,7 @@
             <div class="required form-group" {{ $errors->has('subject_id') ? 'has-error' : '' }}>
                 {!! Form::label('subject_id', 'Select Subject', ['class' => 'control-label col-sm-3']) !!}
                 <div class="col-sm-9">
-                    {!! Form::select('subject_id', $subjectList, null, ['class' => 'form-control', 'placeholder' => 'Select Subject']) !!}
+                    {!! Form::select('subject_id', $subjectList, null, ['class' => 'form-control', 'placeholder' => 'Select Subject', 'required']) !!}
                     <span class="help-block text-danger">
                         {{ $errors->first('subject_id') }}
                     </span>
@@ -22,7 +22,7 @@
                 {!! Form::label('get_mark', 'Get Mark', ['class' => 'control-label col-sm-3']) !!}
                 <div class="col-sm-9">
                     {!! Form::number('get_mark', null, ['class' => 'form-control', 'placeholder' => 'Enter Get Mark', 'id' => 'get_mark', 'step' => 'any', 'required']) !!}
-                    <span class="help-block text-danger">
+                    <span class="help-block text-danger" style="color: red">
                         {{ $errors->first('get_mark') }}
                     </span>
                 </div>
@@ -44,7 +44,7 @@
                 <div class="required form-group" {{ $errors->has('student_id') ? 'has-error' : '' }}>
                     {!! Form::label('student_id', 'Select Student', ['class' => 'control-label col-sm-3']) !!}
                     <div class="col-sm-9">
-                        {!! Form::select('student_id', $studentList, null, ['class' => 'form-control', 'placeholder' => 'Select Student', 'id' => '']) !!}
+                        {!! Form::select('student_id', $studentList, null, ['class' => 'form-control', 'placeholder' => 'Select Student', 'id' => '', 'required']) !!}
                         <span class="help-block text-danger">
                             {{ $errors->first('student_id') }}
                         </span>
@@ -54,7 +54,7 @@
                 <div class="required form-group" {{ $errors->has('term_id') ? 'has-error' : '' }}>
                     {!! Form::label('term_id', 'Select Term', ['class' => 'control-label col-sm-3']) !!}
                     <div class="col-sm-9">
-                        {!! Form::select('term_id', $termList, null, ['class' => 'form-control', 'placeholder' => 'Select Term']) !!}
+                        {!! Form::select('term_id', $termList, null, ['class' => 'form-control', 'placeholder' => 'Select Term', 'required']) !!}
                         <span class="help-block text-danger">
                             {{ $errors->first('term_id') }}
                         </span>
@@ -64,7 +64,7 @@
                 <div class="required form-group" {{ $errors->has('year_id') ? 'has-error' : '' }}>
                     {!! Form::label('year_id', 'Select Year', ['class' => 'control-label col-sm-3']) !!}
                     <div class="col-sm-9">
-                        {!! Form::select('year_id', $yearList, null, ['class' => 'form-control', 'placeholder' => 'Select Year']) !!}
+                        {!! Form::select('year_id', $yearList, null, ['class' => 'form-control', 'placeholder' => 'Select Year', 'required']) !!}
                         <span class="help-block text-danger">
                             {{ $errors->first('year_id') }}
                         </span>

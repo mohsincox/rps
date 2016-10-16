@@ -11,6 +11,8 @@ use App\Models\Year;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
+use App\Http\Requests\ResultRequest;
+use App\Http\Requests\ResultDetailRequest;
 use Cart;
 
 class ResultController extends Controller
@@ -37,8 +39,9 @@ class ResultController extends Controller
         return view('result.create', compact('studentList', 'termList', 'yearList', 'subjectList', 'addedList'));
     }
 
-    public function addToCart(Request $request)
+    public function addToCart(ResultRequest $request)
     {
+        //$this->validate($request, $this->addResultRule);
         //return $request->all();
         $subject = Subject::find($request->subject_id);
         Cart::instance($this->resultCart)->add([
@@ -72,15 +75,17 @@ class ResultController extends Controller
         return redirect()->back();
     }
 
-    public function saveCart(Request $request)
+    public function saveCart(ResultDetailRequest $request)
     {
-        $result = Result::create($request->all());
-
-         $cart = Cart::instance($this->resultCart)->content();
+        $cart = Cart::instance($this->resultCart)->content();
 
         if(count($cart)){
-            $data = [];
+            $deleteResult = Result::where('student_id', $request->student_id)->get();
+            ResultDetail::where('result_id', $deleteResult[0]->id)->delete();
+            Result::where('student_id', $request->student_id)->delete();
+            $result = Result::create($request->all());
 
+            $data = [];
             foreach ($cart as $item) {
                 $data= [
                     'result_id' => $result->id,
@@ -88,7 +93,7 @@ class ResultController extends Controller
                     'get_mark' => $item->price,
                 ];
 
-                 ResultDetail::create($data);
+                 $resultDetails = ResultDetail::create($data);
 
             }
         }else{
@@ -98,6 +103,25 @@ class ResultController extends Controller
 
         $this->clearAllLists();
 
-        return redirect()->back();
+        return redirect('result/' . $result->id);
+    }
+
+    public function show($id)
+    {
+        $result = Result::with([
+                                   'student',
+                                   'term',
+                                   'year',
+                                   'student.level',
+                                   'student.section',
+                                   'student.year'
+                               ])
+                            ->find($id);
+
+        $resultDetails = ResultDetail::with(['subject'])
+            ->where('result_id', $result->id)
+            ->get();
+
+        return view('result.show', compact('result', 'resultDetails'));
     }
 }

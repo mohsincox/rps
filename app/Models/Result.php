@@ -13,4 +13,19 @@ class Result extends Model
         'term_id',
         'year_id'
     ];
+
+    public function student()
+    {
+        return $this->belongsTo(Student::class);
+    }
+
+    public function term()
+    {
+        return $this->belongsTo(Term::class);
+    }
+
+    public function year()
+    {
+        return $this->belongsTo(Year::class);
+    }
 }

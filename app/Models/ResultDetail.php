@@ -13,4 +13,9 @@ class ResultDetail extends Model
         'subject_id',
         'get_mark'
     ];
+
+    public function subject()
+    {
+        return $this->belongsTo(Subject::class);
+    }
 }
