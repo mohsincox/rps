@@ -30,7 +30,9 @@ class SubjectController extends Controller
     public function store(SubjectRequest $request)
     {
         $totalPercentage = ($request->total_mark * 100) / $request->total_mark;
+        $totalPercentage = round($totalPercentage);
         $passPercentage = ($request->pass_mark * 100) / $request->total_mark;
+        $passPercentage = round($passPercentage);
         $subject = Subject::create([
                                        'name' => $request->name,
                                        'total_mark' => $request->total_mark,
@@ -53,7 +55,9 @@ class SubjectController extends Controller
     public function update(SubjectRequest $request, $id)
     {
         $totalPercentage = ($request->total_mark * 100) / $request->total_mark;
+        $totalPercentage = round($totalPercentage);
         $passPercentage = ($request->pass_mark * 100) / $request->total_mark;
+        $passPercentage = round($passPercentage);
         $subject = Subject::find($id);
         $subject->update([
                              'name' => $request->name,

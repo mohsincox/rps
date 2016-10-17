@@ -120,7 +120,9 @@ class ResultController extends Controller
 
         $resultDetails = ResultDetail::with(['subject'])
             ->where('result_id', $result->id)
+            ->orderBy('subject_id', 'asc')
             ->get();
+
 
         return view('result.show', compact('result', 'resultDetails'));
     }
