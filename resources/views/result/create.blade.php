@@ -79,12 +79,17 @@
                         <th>Subject Name</th>
                         {{--<th>Quantity</th>--}}
                         <th>Marks</th>
-                        {{--<th>Sub Total</th>--}}
+                        <th>Mark Percentage</th>
+                        <th>Grade</th>
+                        <th>Grade Point</th>
                         <th>Delete</th>
                     </tr>
                     </thead>
                     <tbody>
-                    <?php $i=1; ?>
+                    <?php
+                        $i=1;
+                        $totalPoint = 0;
+                    ?>
                     @foreach($addedList as $key=>$item)
                         <tr>
                             <td>{{ $i++ }}</td>
@@ -92,11 +97,16 @@
                             <td>{{ $item->name }}</td>
                             {{--<td>{{ $item->qty }}</td>--}}
                             <td>{{ $item->price }}</td>
-                            {{--<td>{{ $item->subtotal }}</td>--}}
+                            <td>{{ $item->options->getMarkPercentage }}</td>
+                            <td>{{ $item->options->grade }}</td>
+                            <td>{{ $item->options->gradePoint }}</td>
                             <td style=""><a class="btn btn-danger btn-xs" href="{!! url('result/remove-list/'. $key) !!}">
                                     <i class="fa fa-trash"></i>
                                 </a>
                             </td>
+                            <?php
+                                $totalPoint = $totalPoint + $item->options->gradePoint;
+                            ?>
                         </tr>
                     @endforeach
                     </tbody>

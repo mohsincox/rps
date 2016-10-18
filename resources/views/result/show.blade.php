@@ -8,12 +8,12 @@
     <hr>
     <div class="row">
         <div class="col-sm-6">
-            <table class="table table-bordered table-striped table-hover">
+            <table class="table table-borderless table-striped table-hover ">
                 <tr>
-                    <td>Student Name:</td>
-                    <th>{{ $result->student->name }}</th>
+                    <td style="border: 0;">Student Name:</td>
+                    <th style="border: 0;">{{ $result->student->name }}</th>
                 </tr>
-                <tr>
+                <tr style="border: 0;">
                     <td>Class:</td>
                     <th>{{ $result->student->level->name }}</th>
                 </tr>
@@ -145,7 +145,9 @@
                         <td>{{ $gradePoint }}</td>
                         <td>{{ $grade }}</td>
                         @if($print)
-                            <td rowspan="11"  style="text-align: center;">{{ round($totalPoint/11, 2, PHP_ROUND_HALF_UP) }}</td>
+                            <td rowspan="11"  style="vertical-align: middle;text-align: center;">
+                                {{ round($totalPoint/11, 2, PHP_ROUND_HALF_UP) }}
+                            </td>
                             @php
                                 $print = false;
                             @endphp

@@ -11,7 +11,11 @@ class ResultDetail extends Model
     protected $fillable = [
         'result_id',
         'subject_id',
-        'get_mark'
+        'get_mark',
+        'get_mark_percentage',
+        'grade',
+        'grade_point',
+        'total_point'
     ];
 
     public function subject()
