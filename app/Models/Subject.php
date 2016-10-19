@@ -15,4 +15,9 @@ class Subject extends Model
         'pass_mark',
         'pass_mark_in_percentage'
     ];
+
+    public function resultDetails()
+    {
+        return $this->hasMany(ResultDetail::class);
+    }
 }

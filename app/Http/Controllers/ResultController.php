@@ -26,7 +26,9 @@ class ResultController extends Controller
 
     public function index()
     {
-        return 'rest';
+        $results = Result::with(['student', 'term', 'year', 'student.level', 'student.section'])->get();
+
+        return view('result.index', compact('results'));
     }
 
     public function create()
@@ -70,9 +72,13 @@ class ResultController extends Controller
             $grade = 'D';
             $gradePoint = 1;
         }
-        else {
+        else if( ($getMarkPercentage >= 0) && ($getMarkPercentage <= 32)) {
             $grade = 'F';
             $gradePoint = 0;
+        }
+        else {
+            $grade = 'Wrong Input';
+            $gradePoint = null;
         }
 
         Cart::instance($this->resultCart)->add([
@@ -119,9 +125,11 @@ class ResultController extends Controller
                 ResultDetail::where('result_id', $deleteResult[0]->id)->delete();
                 Result::where('student_id', $request->student_id)->delete();
             }
+
             $result = Result::create($request->all());
 
             $data = [];
+            $totalGradePoint = 0;
             foreach ($cart as $item) {
 
                 $data= [
@@ -134,7 +142,9 @@ class ResultController extends Controller
                 ];
 
 //                dd($data);
+
                  $resultDetails = ResultDetail::create($data);
+                 $totalGradePoint += $resultDetails->grade_point;
 
             }
         }else{
@@ -142,6 +152,12 @@ class ResultController extends Controller
             return redirect()->back()->withInput();
         }
 
+        $result->update([
+                            'student_id' => $request->student_id,
+                            'term_id' => $request->term_id,
+                            'year_id' => $request->year_id,
+                            'total_point' => $totalGradePoint
+                        ]);
         $this->clearAllLists();
 
         return redirect('result/' . $result->id);
@@ -159,12 +175,24 @@ class ResultController extends Controller
                                ])
                             ->find($id);
 
-        $resultDetails = ResultDetail::with(['subject'])
+        /*$resultDetails = ResultDetail::with(['subject'])
             ->where('result_id', $result->id)
             ->orderBy('subject_id', 'asc')
-            ->get();
+            ->get();*/
+        $resultDetailsBySubject = Subject::with(
+            ['resultDetails' => function($query) use($result) {
+                $query->where('result_id', $result->id);
+            }]
+        )->get();
 
+//        $resultDetailsBySubject = Student::with(
+//            ['resultDetails' => function($query) use($result) {
+//                $query->where('student_id', $result->student->id);
+//            }]
+//        )->get();
 
-        return view('result.show', compact('result', 'resultDetails'));
+        return ($resultDetailsBySubject);
+
+        return view('result.show', compact('result', 'resultDetailsBySubject'));
     }
 }

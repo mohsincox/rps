@@ -14,8 +14,7 @@ class ResultDetail extends Model
         'get_mark',
         'get_mark_percentage',
         'grade',
-        'grade_point',
-        'total_point'
+        'grade_point'
     ];
 
     public function subject()

@@ -11,7 +11,8 @@ class Result extends Model
     protected $fillable = [
         'student_id',
         'term_id',
-        'year_id'
+        'year_id',
+        'total_point'
     ];
 
     public function student()

@@ -34,4 +34,9 @@ class Student extends Model
     {
         return $this->belongsTo(Year::class);
     }
+
+//    public function resultDetails()
+//    {
+//        return $this->hasMany(Result::class);
+//    }
 }
