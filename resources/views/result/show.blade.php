@@ -67,25 +67,74 @@
                         //return $rD = count($resultDetailsBySubject);
                 ?>
                 @foreach($resultDetailsBySubject as $details)
-                    <tr>
+                    @if($details->resultDetails->first()->get_mark < $details->pass_mark)
+                    <tr style="background-color: red;">
                         {{--<td>{{ $details->id }}</td>--}}
                         <td>{{ ++$i }}</td>
                         <td>{{ $details->name }}</td>
                         <td>{{ $details->total_mark }}</td>
                         <td>{{ $details->pass_mark }}</td>
-                        <td>{{ $details->resultDetails->get_mark or 'Absent' }}</td>
-                        <td>{{ $details->resultDetails->get_mark_percentage or 'Absent' }}</td>
-                        <td>{{ $details->resultDetails->grade_point or 'Absent' }}</td>
-                        <td>{{ $details->resultDetails->grade or 'Absent' }}</td>
+                        <td><strong>{{ $details->resultDetails->first()->get_mark or 'Absent' }}</strong></td>
+                        <td>{{ $details->resultDetails->first()->get_mark_percentage or 'Absent' }}</td>
+                        <td>{{ $details->resultDetails->first()->grade_point or 'Absent' }}</td>
+                        <td>{{ $details->resultDetails->first()->grade or 'Absent' }}</td>
                         @if($print)
-                            <td rowspan="11"  style="vertical-align: middle;text-align: center;">
-                                {{ round($totalPoint/11, 2, PHP_ROUND_HALF_UP) }}
+                            <td rowspan="11"  style="vertical-align: middle;text-align: center; background-color: white">
+                                {{--{{ round($totalPoint/11, 2, PHP_ROUND_HALF_UP) }}--}} <strong style="color: red;">Fail</strong>
                             </td>
                             @php
                                 $print = false;
                             @endphp
                         @endif
                     </tr>
+
+
+
+                    @elseif($details->resultDetails == '')
+                        jtgdgi
+                        {{--<tr style="background-color: yellow;">--}}
+                            {{--<td>{{ $details->id }}</td>--}}
+                            {{--<td>{{ ++$i }}</td>--}}
+                            {{--<td>{{ $details->name }}</td>--}}
+                            {{--<td>{{ $details->total_mark }}</td>--}}
+                            {{--<td>{{ $details->pass_mark }}</td>--}}
+                            {{--<td><strong>{{ $details->resultDetails->first()->get_mark or 'Absent' }}</strong></td>--}}
+                            {{--<td>{{ $details->resultDetails->first()->get_mark_percentage or 'Absent' }}</td>--}}
+                            {{--<td>{{ $details->resultDetails->first()->grade_point or 'Absent' }}</td>--}}
+                            {{--<td>{{ $details->resultDetails->first()->grade or 'Absent' }}</td>--}}
+                            {{--@if($print)--}}
+                                {{--<td rowspan="11"  style="vertical-align: middle;text-align: center; background-color: white">--}}
+                                    {{--{{ round($totalPoint/11, 2, PHP_ROUND_HALF_UP) }} <strong style="color: red;">Fail</strong>--}}
+                                {{--</td>--}}
+                                {{--@php--}}
+                                {{--$print = false;--}}
+                                {{--@endphp--}}
+                            {{--@endif--}}
+                        {{--</tr>--}}
+
+
+
+                    @else
+                        <tr>
+                            {{--<td>{{ $details->id }}</td>--}}
+                            <td>{{ ++$i }}</td>
+                            <td>{{ $details->name }}</td>
+                            <td>{{ $details->total_mark }}</td>
+                            <td>{{ $details->pass_mark }}</td>
+                            <td><strong>{{ $details->resultDetails->first()->get_mark or 'Absent' }}</strong></td>
+                            <td>{{ $details->resultDetails->first()->get_mark_percentage or 'Absent' }}</td>
+                            <td>{{ $details->resultDetails->first()->grade_point or 'Absent' }}</td>
+                            <td>{{ $details->resultDetails->first()->grade or 'Absent' }}</td>
+                            @if($print)
+                                <td rowspan="11"  style="vertical-align: middle;text-align: center;">
+                                    {{ round($totalPoint/11, 2, PHP_ROUND_HALF_UP) }}
+                                </td>
+                                @php
+                                $print = false;
+                                @endphp
+                            @endif
+                        </tr>
+                    @endif
                 @endforeach
 
                 </tbody>
