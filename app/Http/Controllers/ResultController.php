@@ -80,7 +80,19 @@ class ResultController extends Controller
             $grade = 'Wrong Input';
             $gradePoint = null;
         }
+        //return $request->subject_id;
+        $cartSubjects = Cart::instance($this->resultCart)->content();
+        foreach($cartSubjects as $cartSubject) {
 
+            //echo $cartSubject->id;
+            if($cartSubject->id == $request->subject_id){
+
+                flash()->error('This Subject is Already Exist.');
+                return redirect()->back();
+            }
+        }
+        //return null;
+        //count($subject->id);
         Cart::instance($this->resultCart)->add([
                       'id' => $request->subject_id,
                       'name' => $subject->name,
@@ -191,7 +203,7 @@ class ResultController extends Controller
 //            }]
 //        )->get();
 
-        return ($resultDetailsBySubject);
+        //return ($resultDetailsBySubject);
 
         return view('result.show', compact('result', 'resultDetailsBySubject'));
     }
