@@ -204,7 +204,40 @@ class ResultController extends Controller
 //        )->get();
 
         //return ($resultDetailsBySubject);
+        $totalPoint = 0;
+        $i = 0;
+        $totalPoint = 0;
+        $isFail = false;
+        foreach($resultDetailsBySubject as $details) {
+            //echo count($details->resultDetails);
+            if(count($details->resultDetails) == 0) {
+                $isFail = true;
+                ++$i;
+                if($resultDetailsBySubject->count() == $i) {
+                    $pointResult =  $isFail? 'Failed' : $totalPoint;
+                }
+            }
+            else {
+                if($details->resultDetails->first()->get_mark < $details->pass_mark) {
+                    $isFail = true;
+                    ++$i;
+                    if($resultDetailsBySubject->count() == $i) {
+                        $pointResult =  $isFail? 'Faileddd' : $totalPoint;
+                        //dd($pointResult);
+                    }
+                }
+                else {
 
-        return view('result.show', compact('result', 'resultDetailsBySubject'));
+                    ++$i;
+                    if($resultDetailsBySubject->count() == $i) {
+                        $pointResult =  $isFail? 'Failed' : $totalPoint;
+                    }
+                    $totalPoint += $details->resultDetails->first()->grade_point;
+                }
+            }
+        }
+        //return $condition;
+
+        return view('result.show', compact('result', 'resultDetailsBySubject', 'pointResult'));
     }
 }
