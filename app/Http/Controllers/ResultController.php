@@ -227,12 +227,13 @@ class ResultController extends Controller
                     }
                 }
                 else {
-
+                    $totalPoint += $details->resultDetails->first()->grade_point;
                     ++$i;
                     if($resultDetailsBySubject->count() == $i) {
+
                         $pointResult =  $isFail? 'Failed' : $totalPoint;
                     }
-                    $totalPoint += $details->resultDetails->first()->grade_point;
+                    //$totalPoint += $details->resultDetails->first()->grade_point;
                 }
             }
         }
