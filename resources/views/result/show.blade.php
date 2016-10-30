@@ -8,30 +8,30 @@
     <hr>
     <div class="row">
         <div class="col-sm-6">
-            <table class="table table-borderless table-striped table-hover ">
+            <table class="table">
                 <tr>
                     <td style="border: 0;">Student Name:</td>
-                    <th style="border: 0;">{{ $result->student->name }}</th>
-                </tr>
-                <tr style="border: 0;">
-                    <td>Class:</td>
-                    <th>{{ $result->student->level->name }}</th>
+                    <td style="border: 0;"><strong>{{ $result->student->name }}</strong></td>
                 </tr>
                 <tr>
-                    <td>Section</td>
-                    <th>{{ $result->student->section->name }}</th>
+                    <td style="border: 0;">Class:</td>
+                    <td  style="border: 0;"><strong>{{ $result->student->level->name }}</strong></td>
                 </tr>
                 <tr>
-                    <td>Father's Name</td>
-                    <th>{{ $result->student->father_name }}</th>
+                    <td style="border: 0;">Section</td>
+                    <td style="border: 0;"><strong>{{ $result->student->section->name }}</strong></td>
                 </tr>
                 <tr>
-                    <td>Mother's Name</td>
-                    <th>{{ $result->student->mother_name }}</th>
+                    <td style="border: 0;">Father's Name</td>
+                    <td style="border: 0;"><strong>{{ $result->student->father_name }}</strong></td>
                 </tr>
                 <tr>
-                    <td>Address</td>
-                    <th>{{ $result->student->address }}</th>
+                    <td style="border: 0;">Mother's Name</td>
+                    <td style="border: 0;"><strong>{{ $result->student->mother_name }}</strong></td>
+                </tr>
+                <tr>
+                    <td style="border: 0;">Address</td>
+                    <td style="border: 0;"><strong>{{ $result->student->address }}</strong></td>
                 </tr>
             </table>
         </div>
@@ -46,26 +46,22 @@
         <div class="col-sm-12">
             <table class="table table-bordered table-striped table-hover">
                 <thead>
-                <tr>
-                    {{--<th>ID</th>--}}
-                    <th>SL</th>
-                    <th>Subject Name</th>
-                    <th>Total Mark</th>
-                    <th>Pass Mark</th>
-                    <th>Get Mark</th>
-                    <th>Get Mark in %</th>
-                    <th>Grade Point</th>
-                    <th>Grade</th>
-                    <th>Total iiiiiiiiiiiiiiii</th>
-                </tr>
+                    <tr>
+                        {{--<th>ID</th>--}}
+                        <th>SL</th>
+                        <th>Subject Name</th>
+                        <th>Total Mark</th>
+                        <th>Pass Mark</th>
+                        <th>Get Mark</th>
+                        <th>Get Mark in %</th>
+                        <th>Grade Point</th>
+                        <th>Grade</th>
+                        <th>Total</th>
+                    </tr>
                 </thead>
                 <tbody>
                 <?php
-                $i = 0;
-                //$print = true;
-                //$totalPoint = 0;
-                //$isFail = false;
-                //return $rD = count($resultDetailsBySubject);
+                    $i = 0;
                 ?>
                 @foreach($resultDetailsBySubject as  $details)
                     @if(!count($details->resultDetails))
@@ -79,14 +75,9 @@
                             <td>{{ $details->resultDetails->first()->grade_point or 'Absent' }}</td>
                             <td>{{ $details->resultDetails->first()->grade or 'Absent' }}</td>
 
-                            <?php
-                            //$isFail = true;
-                            ?>
-                            @if($i==1)
-                                <td style="vertical-align: middle; text-align: center;" rowspan={{ $resultDetailsBySubject->count() }}>{{ $pointResult }}</td>
+                            @if($i == 1)
+                                <td style="vertical-align: middle; text-align: center; background-color: white; color: gray;" rowspan={{ $resultDetailsBySubject->count() }}><strong>{{ $pointResult }}</strong></td>
                             @endif
-                            {{--<td>{{ $pointResult }}</td>--}}
-                            {{--<td rowspan=""  style="vertical-align: middle;text-align: center;">222</td>--}}
                         </tr>
                     @else
                         @if($details->resultDetails->first()->get_mark < $details->pass_mark)
@@ -100,7 +91,7 @@
                                 <td>{{ $details->resultDetails->first()->grade_point or 'Absent' }}</td>
                                 <td>{{ $details->resultDetails->first()->grade or 'Absent' }}</td>
                                 @if($i==1)
-                                    <td style="vertical-align: middle; text-align: center;" rowspan={{ $resultDetailsBySubject->count() }}>{{ $pointResult }}</td>
+                                    <td style="vertical-align: middle; text-align: center; background-color: white; color: black;" rowspan={{ $resultDetailsBySubject->count() }}><strong>{{ $pointResult }}</strong></td>
                                 @endif
                             </tr>
 
@@ -115,7 +106,7 @@
                                 <td>{{ $details->resultDetails->first()->grade_point or 'Absent' }}</td>
                                 <td>{{ $details->resultDetails->first()->grade or 'Absent' }}</td>
                                 @if($i==1)
-                                    <td style="vertical-align: middle; text-align: center;" rowspan={{ $resultDetailsBySubject->count() }}>{{ $pointResult }}</td>
+                                    <td style="vertical-align: middle; text-align: center; background-color: white;" rowspan={{ $resultDetailsBySubject->count() }}><strong>{{ $pointResult }}</strong></td>
                                 @endif
                             </tr>
                         @endif

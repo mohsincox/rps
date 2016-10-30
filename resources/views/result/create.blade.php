@@ -106,7 +106,7 @@
                             <td>{{ $item->price }}</td>
                             <td>{{ $item->options->getMarkPercentage }}</td>
                             <td>{{ $item->options->grade }}</td>
-                            <td>{{ $item->options->gradePoint }}</td>
+                            <td>{!! $item->options->gradePoint !!}</td>
                             <td style=""><a class="btn btn-danger btn-xs" href="{!! url('result/remove-list/'. $key) !!}">
                                     <i class="fa fa-trash"></i>
                                 </a>

@@ -77,8 +77,8 @@ class ResultController extends Controller
             $gradePoint = 0;
         }
         else {
-            $grade = 'Wrong Input';
-            $gradePoint = null;
+            $grade = null;
+            $gradePoint = '<strong style="color: red;">Wrong Input</strong>';
         }
         //return $request->subject_id;
         $cartSubjects = Cart::instance($this->resultCart)->content();
@@ -128,6 +128,13 @@ class ResultController extends Controller
     {
         $cart = Cart::instance($this->resultCart)->content();
 
+        foreach( $cart as $c ) {
+            if(is_string($c->options->gradePoint)) {
+                flash()->error('Wrong Input');
+                return redirect()->back();
+            }
+        }
+
         if(count($cart)){
             $deleteResult = Result::where('student_id', $request->student_id)
                                     ->where('term_id', $request->term_id)
@@ -152,8 +159,6 @@ class ResultController extends Controller
                     'grade' => $item->options->grade,
                     'grade_point' => $item->options->gradePoint
                 ];
-
-//                dd($data);
 
                  $resultDetails = ResultDetail::create($data);
                  $totalGradePoint += $resultDetails->grade_point;
@@ -187,29 +192,17 @@ class ResultController extends Controller
                                ])
                             ->find($id);
 
-        /*$resultDetails = ResultDetail::with(['subject'])
-            ->where('result_id', $result->id)
-            ->orderBy('subject_id', 'asc')
-            ->get();*/
         $resultDetailsBySubject = Subject::with(
             ['resultDetails' => function($query) use($result) {
                 $query->where('result_id', $result->id);
             }]
         )->get();
 
-//        $resultDetailsBySubject = Student::with(
-//            ['resultDetails' => function($query) use($result) {
-//                $query->where('student_id', $result->student->id);
-//            }]
-//        )->get();
-
-        //return ($resultDetailsBySubject);
-        $totalPoint = 0;
         $i = 0;
         $totalPoint = 0;
         $isFail = false;
         foreach($resultDetailsBySubject as $details) {
-            //echo count($details->resultDetails);
+
             if(count($details->resultDetails) == 0) {
                 $isFail = true;
                 ++$i;
@@ -237,7 +230,6 @@ class ResultController extends Controller
                 }
             }
         }
-        //return $condition;
 
         return view('result.show', compact('result', 'resultDetailsBySubject', 'pointResult'));
     }
