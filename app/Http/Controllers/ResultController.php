@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Level;
 use App\Models\Result;
 use App\Models\ResultDetail;
 use App\Models\Student;
@@ -26,7 +27,7 @@ class ResultController extends Controller
 
     public function index()
     {
-        $results = Result::with(['student', 'term', 'year', 'student.level', 'student.section'])->get();
+        $results = Result::with(['student', 'level', 'term', 'year', 'student.level', 'student.section'])->get();
 
         return view('result.index', compact('results'));
     }
@@ -34,11 +35,12 @@ class ResultController extends Controller
     public function create()
     {
         $studentList = Student::pluck('name', 'id');
+        $classList = Level::pluck('name', 'id');
         $termList = Term::pluck('name', 'id');
         $yearList = Year::pluck('year', 'id');
         $subjectList = Subject::pluck('name', 'id');
         $addedList = Cart::instance($this->resultCart)->content();
-        return view('result.create', compact('studentList', 'termList', 'yearList', 'subjectList', 'addedList'));
+        return view('result.create', compact('studentList', 'termList', 'yearList', 'subjectList', 'addedList', 'classList'));
     }
 
     public function addToCart(ResultRequest $request)
@@ -137,6 +139,7 @@ class ResultController extends Controller
 
         if(count($cart)){
             $deleteResult = Result::where('student_id', $request->student_id)
+                                    ->where('level_id', $request->level_id)
                                     ->where('term_id', $request->term_id)
                                     ->where('year_id', $request->year_id)
                                     ->get();

@@ -25,6 +25,7 @@ class ResultDetailRequest extends FormRequest
     {
         return [
             'student_id' => 'required',
+            'level_id' => 'required',
             'term_id' => 'required',
             'year_id' => 'required'
         ];

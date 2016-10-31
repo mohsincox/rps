@@ -49,6 +49,16 @@
                 </div>
             </div>
 
+            <div class="required form-group" {{ $errors->has('level_id') ? 'has-error' : '' }}>
+                {!! Form::label('level_id', 'Select Class', ['class' => 'control-label col-sm-12']) !!}
+                <div class="col-sm-12">
+                    {!! Form::select('level_id', $classList, null, ['class' => 'form-control', 'placeholder' => 'Select Class', 'id' => '', 'required']) !!}
+                    <span class="help-block text-danger">
+                            {{ $errors->first('level_id') }}
+                        </span>
+                </div>
+            </div>
+
             <div class="required form-group" {{ $errors->has('term_id') ? 'has-error' : '' }}>
                 {!! Form::label('term_id', 'Select Term', ['class' => 'control-label col-sm-12']) !!}
                 <div class="col-sm-12">

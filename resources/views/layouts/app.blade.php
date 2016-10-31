@@ -62,7 +62,16 @@
                         <li><a href="{{ url('/subject') }}">Subject</a></li>
                         <li><a href="{{ url('/term') }}">Term</a></li>
                         <li><a href="{{ url('/student') }}">Student</a></li>
-                        <li><a href="{{ url('/result/create') }}">Result</a></li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                                RESULT <span class="caret"></span>
+                            </a>
+
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a href="{{ url('/result') }}">Result Show</a></li>
+                                <li><a href="{{ url('/result/create') }}">Result Create</a></li>
+                            </ul>
+                        </li>
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                                 {{ Auth::user()->name }} <span class="caret"></span>
