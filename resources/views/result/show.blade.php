@@ -76,7 +76,7 @@
                             <td>{{ $details->resultDetails->first()->grade or 'Absent' }}</td>
 
                             @if($i == 1)
-                                <td style="vertical-align: middle; text-align: center; background-color: white; color: gray;" rowspan={{ $resultDetailsBySubject->count() }}><strong>{{ $pointResult }}</strong></td>
+                                <td style="vertical-align: middle; text-align: center; background-color: white; color: gray;" rowspan={{ $resultDetailsBySubject->count() }}><strong>{{ $totalResult }}</strong></td>
                             @endif
                         </tr>
                     @else
@@ -91,7 +91,7 @@
                                 <td>{{ $details->resultDetails->first()->grade_point or 'Absent' }}</td>
                                 <td>{{ $details->resultDetails->first()->grade or 'Absent' }}</td>
                                 @if($i==1)
-                                    <td style="vertical-align: middle; text-align: center; background-color: white; color: black;" rowspan={{ $resultDetailsBySubject->count() }}><strong>{{ $pointResult }}</strong></td>
+                                    <td style="vertical-align: middle; text-align: center; background-color: white; color: black;" rowspan={{ $resultDetailsBySubject->count() }}><strong>{{ $totalResult }}</strong></td>
                                 @endif
                             </tr>
 
@@ -106,7 +106,7 @@
                                 <td>{{ $details->resultDetails->first()->grade_point or 'Absent' }}</td>
                                 <td>{{ $details->resultDetails->first()->grade or 'Absent' }}</td>
                                 @if($i==1)
-                                    <td style="vertical-align: middle; text-align: center; background-color: white;" rowspan={{ $resultDetailsBySubject->count() }}><strong>{{ $pointResult }}</strong></td>
+                                    <td style="vertical-align: middle; text-align: center; background-color: white;" rowspan={{ $resultDetailsBySubject->count() }}><strong>{{ $totalResult }}</strong></td>
                                 @endif
                             </tr>
                         @endif

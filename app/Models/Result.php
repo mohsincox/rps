@@ -13,7 +13,8 @@ class Result extends Model
         'level_id',
         'term_id',
         'year_id',
-        'total_point'
+        'total_point',
+        'result'
     ];
 
     public function student()

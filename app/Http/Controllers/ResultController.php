@@ -174,6 +174,7 @@ class ResultController extends Controller
 
         $result->update([
                             'student_id' => $request->student_id,
+                            'level_id' => $request->level_id,
                             'term_id' => $request->term_id,
                             'year_id' => $request->year_id,
                             'total_point' => $totalGradePoint
@@ -210,7 +211,7 @@ class ResultController extends Controller
                 $isFail = true;
                 ++$i;
                 if($resultDetailsBySubject->count() == $i) {
-                    $pointResult =  $isFail? 'Failed' : $totalPoint;
+                    $totalResult =  $isFail? 'Failed' : $totalPoint;
                 }
             }
             else {
@@ -218,22 +219,60 @@ class ResultController extends Controller
                     $isFail = true;
                     ++$i;
                     if($resultDetailsBySubject->count() == $i) {
-                        $pointResult =  $isFail? 'Faileddd' : $totalPoint;
+                        $totalResult =  $isFail? 'Failed' : $totalPoint;
                         //dd($pointResult);
                     }
                 }
                 else {
                     $totalPoint += $details->resultDetails->first()->grade_point;
+                    //$totalPoint = strval($totalPoint);
                     ++$i;
                     if($resultDetailsBySubject->count() == $i) {
 
-                        $pointResult =  $isFail? 'Failed' : $totalPoint;
+                        $totalResult =  $isFail? 'Failed' : $totalPoint;
+                        $gpa = $totalResult/11;
+                        $totalResult =  round($gpa, 2, PHP_ROUND_HALF_UP);
+                        $stringResult = strval($totalResult);
                     }
-                    //$totalPoint += $details->resultDetails->first()->grade_point;
+
+
                 }
             }
         }
+       // return $totalPoint;
+        //return var_dump($pointResult);
+        $r = Result::find($id);
+        $r->update([
+                       'result' => $stringResult
+                   ]);
 
-        return view('result.show', compact('result', 'resultDetailsBySubject', 'pointResult'));
+        return view('result.show', compact('result', 'resultDetailsBySubject', 'totalResult'));
+    }
+
+    public function showResultForm()
+    {
+        $classList = Level::pluck('name', 'id');
+        $termList = Term::pluck('name', 'id');
+        $yearList = Year::pluck('year', 'id');
+
+        return view('result.report.form', compact('classList', 'termList', 'yearList'));
+    }
+
+    public function showResult(Request $request)
+    {
+        $results = Result::with(['student', 'level', 'term', 'year'])
+            ->where('level_id', $request->level_id)
+            ->where('term_id', $request->term_id)
+            ->where('year_id', $request->year_id)
+            ->get();
+
+        if(!count($results)) {
+            flash()->error('There is no result');
+
+            return redirect()->back();
+        }
+
+        return view('result.report.show', compact('results'));
+
     }
 }
