@@ -11,7 +11,10 @@
         <tr>
             <th>SL</th>
             <th>Student Name</th>
+            <th>Roll No.</th>
+            <th>GPA</th>
             <th>Result</th>
+            <th>View</th>
         </tr>
         </thead>
         <tbody>
@@ -19,8 +22,15 @@
             <tr>
                 <td>{{ ++$key }}</td>
                 <td>{{ $result->student->name }}</td>
-                <td>{{ $result->result }}</td>
-
+                <td>{{ $result->student->roll_no }}</td>
+                @if($result->grade_point_avg == 0.00)
+                    <td>Failed</td>
+                    <td>Failed</td>
+                @else
+                    <td>{{ $result->grade_point_avg }}</td>
+                    <td>Passed</td>
+                @endif
+                <td>{!! Html::link("result/$result->id",' View', ['class' => 'fa fa-eye btn btn-success']) !!}</td>
             </tr>
         @endforeach
         </tbody>

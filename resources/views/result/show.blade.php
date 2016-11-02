@@ -56,7 +56,7 @@
                         <th>Get Mark in %</th>
                         <th>Grade Point</th>
                         <th>Grade</th>
-                        <th>Total</th>
+                        <th>GPA</th>
                     </tr>
                 </thead>
                 <tbody>

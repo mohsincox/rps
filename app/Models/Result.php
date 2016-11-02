@@ -14,6 +14,7 @@ class Result extends Model
         'term_id',
         'year_id',
         'total_point',
+        'grade_point_avg',
         'result'
     ];
 

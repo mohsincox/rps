@@ -209,44 +209,38 @@ class ResultController extends Controller
 
             if(count($details->resultDetails) == 0) {
                 $isFail = true;
-                ++$i;
-                if($resultDetailsBySubject->count() == $i) {
-                    $totalResult =  $isFail? 'Failed' : $totalPoint;
-                }
+                $totalResult =  $isFail? 'Failed1' : $totalPoint;
+                $stringResult = 'Failed11';
+                $gradePointAvg = 0.00;
+                break;
             }
             else {
                 if($details->resultDetails->first()->get_mark < $details->pass_mark) {
                     $isFail = true;
-                    ++$i;
-                    if($resultDetailsBySubject->count() == $i) {
-                        $totalResult =  $isFail? 'Failed' : $totalPoint;
-                        //dd($pointResult);
-                    }
+                    $totalResult =  $isFail? 'Failed2' : $totalPoint;
+                    $stringResult = 'Failed22';
+                    $gradePointAvg = 0.00;
+                    break;
                 }
                 else {
                     $totalPoint += $details->resultDetails->first()->grade_point;
-                    //$totalPoint = strval($totalPoint);
-                    ++$i;
-                    if($resultDetailsBySubject->count() == $i) {
-
-                        $totalResult =  $isFail? 'Failed' : $totalPoint;
-                        $gpa = $totalResult/11;
-                        $totalResult =  round($gpa, 2, PHP_ROUND_HALF_UP);
-                        $stringResult = strval($totalResult);
-                    }
-
+                    $totalResult =  $isFail? 'Failed' : $totalPoint;
+                    $gpa = $totalResult/11;
+                    $totalResult =  round($gpa, 2, PHP_ROUND_HALF_UP);
+                    $stringResult = strval($totalResult);
+                    $gradePointAvg = $totalResult;
 
                 }
             }
         }
-       // return $totalPoint;
-        //return var_dump($pointResult);
-        $r = Result::find($id);
-        $r->update([
-                       'result' => $stringResult
-                   ]);
+//        echo $totalResult;
+//        return null;
+        $result->update([
+                       'result' => $stringResult,
+                       'grade_point_avg' => $gradePointAvg
+                  ]);
 
-        return view('result.show', compact('result', 'resultDetailsBySubject', 'totalResult'));
+        return view('result.show', compact('result', 'resultDetailsBySubject', 'totalResult', 'gradePointAvg'));
     }
 
     public function showResultForm()
@@ -264,6 +258,7 @@ class ResultController extends Controller
             ->where('level_id', $request->level_id)
             ->where('term_id', $request->term_id)
             ->where('year_id', $request->year_id)
+            ->orderBy('grade_point_avg', 'desc')
             ->get();
 
         if(!count($results)) {
@@ -273,6 +268,5 @@ class ResultController extends Controller
         }
 
         return view('result.report.show', compact('results'));
-
     }
 }
