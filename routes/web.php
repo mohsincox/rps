@@ -31,4 +31,5 @@ Route::get('/result/clear-all-lists', 'ResultController@clearAllLists');
 Route::post('/result/save-cart', 'ResultController@saveCart');
 Route::get('/result/show-result-form', 'ResultController@showResultForm');
 Route::post('/result/show-result', 'ResultController@showResult');
+Route::get('/result/student-name-show', 'ResultController@studentNameShow');
 Route::resource('/result', 'ResultController');

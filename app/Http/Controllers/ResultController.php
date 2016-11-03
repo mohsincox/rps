@@ -269,4 +269,12 @@ class ResultController extends Controller
 
         return view('result.report.show', compact('results'));
     }
+
+    public function studentNameShow(Request $request) {
+        $student = Student::find($request->student_id);
+        if(!$student) {
+            return '<strong style="color: red; margin-left: 15px;">Entered Wrong ID of Student.</strong>';
+        }
+        return view('result.student_name_show', compact('student'));
+    }
 }

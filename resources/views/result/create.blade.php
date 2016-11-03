@@ -12,7 +12,7 @@
                 <div class="required form-group" {{ $errors->has('subject_id') ? 'has-error' : '' }}>
                     {!! Form::label('subject_id', 'Select Subject', ['class' => 'control-label col-sm-12']) !!}
                     <div class="col-sm-12">
-                        {!! Form::select('subject_id', $subjectList, null, ['class' => 'form-control', 'placeholder' => 'Select Subject', 'required']) !!}
+                        {!! Form::select('subject_id', $subjectList, null, ['class' => 'form-control chosen', 'placeholder' => 'Select Subject', 'required']) !!}
                         <span class="help-block text-danger">
                             {{ $errors->first('subject_id') }}
                         </span>
@@ -30,7 +30,12 @@
 
                 <div class="form-group">
                     <div class="col-sm-12 col-sm-offset-0">
-                        {!! Form::submit('Add Subject', ['class' => 'btn btn-primary']) !!}
+                        {{--<i class="fa fa-plus"></i>--}}
+                        {{--{!! Form::submit('Add Subject', ['class' => 'btn btn-primary']) !!}--}}
+                        {!! Form::button('<i class="fa fa-plus"></i> Add Subject', [
+                                              'class'     => 'btn btn-primary',
+                                              'type'      => 'submit',
+                                          ]) !!}
                     </div>
 
                 </div>
@@ -39,15 +44,35 @@
 
             {!! Form::open(['url' => 'result/save-cart', 'method' => 'post', 'class' => '', 'role' => '' ]) !!}
 
-            <div class="required form-group" {{ $errors->has('student_id') ? 'has-error' : '' }}>
-                {!! Form::label('student_id', 'Select Student', ['class' => 'control-label col-sm-12']) !!}
+
+            <div class="required form-group{{ $errors->has('student_id') ? ' has-error' : '' }}">
+                {!! Form::label('student_id', 'Student ID', ['class' => 'col-sm-12 control-label']) !!}
                 <div class="col-sm-12">
-                    {!! Form::select('student_id', $studentList, null, ['class' => 'form-control', 'placeholder' => 'Select Student', 'id' => '', 'required']) !!}
-                    <span class="help-block text-danger">
-                            {{ $errors->first('student_id') }}
+                    <div class="input-group required">
+                        {!! Form::text('student_id',null, ['id' => 'student_id', 'class' =>'form-control', 'autocomplete' => 'off', 'placeholder' => 'Enter Student ID', 'required' => 'required' ]) !!}
+                        <span class="input-group-btn">
+                            <button type="button" id="student_id_search" class="btn btn-danger">Search</button>
                         </span>
+                    </div>
+                    <span class="help-block text-danger">
+                        {!! $errors->first('student_id') !!}
+                    </span>
                 </div>
             </div>
+
+            <div>
+                <span id="student_name_show"></span>
+            </div>
+
+            {{--<div class="required form-group" {{ $errors->has('student_id') ? 'has-error' : '' }}>--}}
+                {{--{!! Form::label('student_id', 'Select Student', ['class' => 'control-label col-sm-12']) !!}--}}
+                {{--<div class="col-sm-12">--}}
+                    {{--{!! Form::select('student_id', $studentList, null, ['class' => 'form-control', 'placeholder' => 'Select Student', 'id' => '', 'required']) !!}--}}
+                    {{--<span class="help-block text-danger">--}}
+                            {{--{{ $errors->first('student_id') }}--}}
+                        {{--</span>--}}
+                {{--</div>--}}
+            {{--</div>--}}
 
             <div class="required form-group" {{ $errors->has('level_id') ? 'has-error' : '' }}>
                 {!! Form::label('level_id', 'Select Class', ['class' => 'control-label col-sm-12']) !!}
@@ -143,4 +168,8 @@
             </div>
         </div>
     </div>
+@endsection
+
+@section('script')
+    {!! Html::script('js/search_id.js') !!}
 @endsection

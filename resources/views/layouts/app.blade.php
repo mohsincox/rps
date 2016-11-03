@@ -14,6 +14,8 @@
     <link href="/css/app.css" rel="stylesheet">
     <link href="/css/style.css" rel="stylesheet">
     <link href="/css/font-awesome.min.css" rel="stylesheet">
+    <link href="/css/bootstrap-chosen.css" rel="stylesheet">
+    {{--<link href="{{ asset('plugins/bootstrap-chosen-master/bootstrap-chosen.css') }}" rel="stylesheet">--}}
 
     <!-- Scripts -->
     <script>
@@ -108,8 +110,22 @@
         </div>
     </div>
 
+    <div class="hidden-print">
+        <hr/>
+    </div>
+    <div class="footer hidden-print">
+        <div class="container">
+            @include('layouts.partial.footer')
+
+        </div>
+    </div>
+
     <!-- Scripts -->
     <script src="/js/app.js"></script>
     {!! Html::script('js/jquery-3.1.1.min.js') !!}
+    {!! Html::script('js/chosen.jquery.min.js') !!}
+    {{--{!! Html::script('js/search_id.js') !!}--}}
+    {{--<script src="{{ asset('plugins/chosen_v1.6.2/chosen.jquery.min.js') }}"></script>--}}
+    @yield('script')
 </body>
 </html>
