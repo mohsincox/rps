@@ -1,13 +1,35 @@
 @extends('layouts.app')
 
 @section('content')
+    <style>
+        @media print
+        {
+            .print-margin{
+                margin-top: 200px;
+            }
+            #pager,
+            form,
+            .no-print
+            {
+                display: none !important;
+                height: 0;
+            }
+
+
+            .no-print, .no-print *{
+                display: none !important;
+                height: 0;
+            }
+        }
+    </style>
+    <div class="print-margin">
     <h1>
         <i class="fa fa-file-text-o"></i>
-        Result Details
+        Student Information & Result Details
     </h1>
     <hr>
     <div class="row">
-        <div class="col-sm-6">
+        <div class="col-xs-6">
             <table class="table">
                 <tr>
                     <td style="border: 0;">Student Name:</td>
@@ -35,7 +57,7 @@
                 </tr>
             </table>
         </div>
-        <div class="col-sm-6">
+        <div class="col-xs-6">
             <div class="pull-right">
                 {{ Html::image('/uploads/' . $result->student->image, 'alt', ['width' => 150, 'height' => 150]) }}
             </div>
@@ -43,7 +65,7 @@
     </div>
 
     <div class="row">
-        <div class="col-sm-12">
+        <div class="col-xs-12">
             <table class="table table-bordered table-striped table-hover">
                 <thead>
                     <tr>
@@ -117,4 +139,6 @@
             </table>
         </div>
     </div>
+    </div>
+    <input type="button" class="no-print" value="Print this page" onClick="window.print()">
 @endsection
