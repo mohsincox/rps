@@ -16,8 +16,12 @@ class CreateResultsTable extends Migration
         Schema::create('results', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('student_id')->unsigned();
+            $table->integer('level_id')->unsigned();
             $table->integer('term_id')->unsigned();
             $table->integer('year_id')->unsigned();
+            $table->float('total_point');
+            $table->float('grade_point_avg');
+            $table->string('result');
             $table->timestamps();
         });
     }

@@ -18,6 +18,9 @@ class CreateResultDetailsTable extends Migration
             $table->integer('result_id')->unsigned();
             $table->integer('subject_id')->unsigned();
             $table->float('get_mark');
+            $table->float('get_mark_percentage');
+            $table->string('grade');
+            $table->float('grade_point');
             $table->timestamps();
         });
     }
