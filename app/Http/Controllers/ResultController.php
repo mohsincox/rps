@@ -106,15 +106,27 @@ class ResultController extends Controller
         return redirect('result/create');
     }
 
-    public function removeList($d)
+    public function removeOneSubject($id)
     {
-        Cart::instance($this->resultCart)->remove($d);
+        Cart::instance($this->resultCart)->remove($id);
         flash()->warning('One subject is removed from List.');
 
         return redirect()->back();
     }
 
-    public function clearAllLists()
+    public function clearAllSubjects()
+    {
+        if (Cart::instance($this->resultCart)->count() > 0) {
+            Cart::instance($this->resultCart)->destroy();
+            flash()->error('All Subject(s) are removed from List.');
+            return redirect()->back();
+        }
+
+        flash()->warning('List is already Empty.');
+        return redirect()->back();
+    }
+
+    public function clearAllSubjectsAfterSave()
     {
         if (Cart::instance($this->resultCart)->count() > 0) {
             Cart::instance($this->resultCart)->destroy();
@@ -179,7 +191,7 @@ class ResultController extends Controller
                             'year_id' => $request->year_id,
                             'total_point' => $totalGradePoint
                         ]);
-        $this->clearAllLists();
+        $this->clearAllSubjectsAfterSave();
 
         return redirect('result/' . $result->id);
     }
@@ -202,7 +214,6 @@ class ResultController extends Controller
             }]
         )->get();
 
-        $i = 0;
         $totalPoint = 0;
         $isFail = false;
         foreach($resultDetailsBySubject as $details) {

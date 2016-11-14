@@ -51,7 +51,7 @@
                     <div class="input-group required">
                         {!! Form::text('student_id',null, ['id' => 'student_id', 'class' =>'form-control', 'autocomplete' => 'off', 'placeholder' => 'Enter Student ID', 'required' => 'required' ]) !!}
                         <span class="input-group-btn">
-                            <button type="button" id="student_id_search" class="btn btn-danger">Search</button>
+                            <button type="button" id="student_id_search" class="btn btn-danger"><i class="fa fa-search"></i> Search</button>
                         </span>
                     </div>
                     <span class="help-block text-danger">
@@ -64,20 +64,10 @@
                 <span id="student_name_show"></span>
             </div>
 
-            {{--<div class="required form-group" {{ $errors->has('student_id') ? 'has-error' : '' }}>--}}
-                {{--{!! Form::label('student_id', 'Select Student', ['class' => 'control-label col-sm-12']) !!}--}}
-                {{--<div class="col-sm-12">--}}
-                    {{--{!! Form::select('student_id', $studentList, null, ['class' => 'form-control', 'placeholder' => 'Select Student', 'id' => '', 'required']) !!}--}}
-                    {{--<span class="help-block text-danger">--}}
-                            {{--{{ $errors->first('student_id') }}--}}
-                        {{--</span>--}}
-                {{--</div>--}}
-            {{--</div>--}}
-
             <div class="required form-group" {{ $errors->has('level_id') ? 'has-error' : '' }}>
                 {!! Form::label('level_id', 'Select Class', ['class' => 'control-label col-sm-12']) !!}
                 <div class="col-sm-12">
-                    {!! Form::select('level_id', $classList, null, ['class' => 'form-control', 'placeholder' => 'Select Class', 'id' => '', 'required']) !!}
+                    {!! Form::select('level_id', $classList, null, ['class' => 'form-control chosen', 'placeholder' => 'Select Class', 'id' => '', 'required']) !!}
                     <span class="help-block text-danger">
                             {{ $errors->first('level_id') }}
                         </span>
@@ -87,7 +77,7 @@
             <div class="required form-group" {{ $errors->has('term_id') ? 'has-error' : '' }}>
                 {!! Form::label('term_id', 'Select Term', ['class' => 'control-label col-sm-12']) !!}
                 <div class="col-sm-12">
-                    {!! Form::select('term_id', $termList, null, ['class' => 'form-control', 'placeholder' => 'Select Term', 'required']) !!}
+                    {!! Form::select('term_id', $termList, null, ['class' => 'form-control chosen', 'placeholder' => 'Select Term', 'required']) !!}
                     <span class="help-block text-danger">
                             {{ $errors->first('term_id') }}
                         </span>
@@ -97,7 +87,7 @@
             <div class="required form-group" {{ $errors->has('year_id') ? 'has-error' : '' }}>
                 {!! Form::label('year_id', 'Select Year', ['class' => 'control-label col-sm-12']) !!}
                 <div class="col-sm-12">
-                    {!! Form::select('year_id', $yearList, null, ['class' => 'form-control', 'placeholder' => 'Select Year', 'required']) !!}
+                    {!! Form::select('year_id', $yearList, null, ['class' => 'form-control chosen', 'placeholder' => 'Select Year', 'required']) !!}
                     <span class="help-block text-danger">
                             {{ $errors->first('year_id') }}
                         </span>
@@ -142,10 +132,31 @@
                             <td>{{ $item->options->getMarkPercentage }}</td>
                             <td>{{ $item->options->grade }}</td>
                             <td>{!! $item->options->gradePoint !!}</td>
-                            <td style=""><a class="btn btn-danger btn-xs" href="{!! url('result/remove-list/'. $key) !!}">
+                            <td style=""><a class="btn btn-danger btn-xs" data-toggle="modal" data-target="#myModal-{{ $key }}">
                                     <i class="fa fa-trash"></i>
                                 </a>
                             </td>
+
+                            <!-- Modal -->
+                            <div class="modal fade" id="myModal-{{ $key }}" role="dialog">
+                                <div class="modal-dialog">
+
+                                    <!-- Modal content-->
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                            <h4 class="modal-title">DELETE</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            <p>Do you want to delete <strong>{{ $item->name }}</strong> from the list?</p>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                                            {{ Html::link('result/remove-one-subject/'. $key, 'Delete', ['class' => 'btn btn-danger']) }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                             <?php
                                 $totalPoint = $totalPoint + $item->options->gradePoint;
                             ?>
@@ -161,7 +172,28 @@
                                               'class'     => 'btn btn-success',
                                               'type'      => 'submit',
                                           ]) !!}
-                        {{ Html::link('result/clear-all-lists', 'Clear', ['class' => 'btn btn-danger fa fa-times']) }}
+                        {{--{{ Html::link('result/clear-all-subjects', 'Clear', ['class' => 'btn btn-danger fa fa-times', 'style' => 'padding: 10px;']) }}--}}
+                        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModalClear"><i class="fa fa-times"></i> Clear</button>
+                        <!-- Modal -->
+                        <div class="modal fade" id="myModalClear" role="dialog">
+                            <div class="modal-dialog">
+
+                                <!-- Modal content-->
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                        <h4 class="modal-title">DELETE</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p>Do you want to delete <strong>All Subject(s)</strong> from the list?</p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                                        {{ Html::link('result/clear-all-subjects', 'Delete', ['class' => 'btn btn-danger']) }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 {!! Form::close() !!}
