@@ -69,7 +69,7 @@
 <div class="form-group {{ $errors->has('address') ? 'has-error' : ''}}">
     {!! Form::label('address', 'Address', ['class' => 'col-sm-3 control-label']) !!}
     <div class="col-sm-9">
-        {!! Form::text('address', null, ['class' => 'form-control', 'placeholder' => 'Enter Address', 'autocomplete' => 'off']) !!}
+        {!! Form::textarea('address', null, ['class' => 'form-control', 'placeholder' => 'Enter Address', 'autocomplete' => 'off', 'rows' => 3]) !!}
         <span class="help-block text-danger">
 			    {{ $errors->first('address') }}
 		    </span>

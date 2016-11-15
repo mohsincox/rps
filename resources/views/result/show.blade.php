@@ -140,5 +140,5 @@
         </div>
     </div>
     </div>
-    <input type="button" class="no-print" value="Print this page" onClick="window.print()">
+    <input type="button" class="no-print btn btn-primary" value="Print this page" onClick="window.print()">
 @endsection

@@ -288,4 +288,14 @@ class ResultController extends Controller
         }
         return view('result.student_name_show', compact('student'));
     }
+
+    public function destroy($id) {
+        $result = Result::find($id);
+        ResultDetail::where('result_id', $result->id)->delete();
+        Result::destroy($id);
+
+        flash()->error('Successfully Deleted.');
+
+        return redirect('result');
+    }
 }
