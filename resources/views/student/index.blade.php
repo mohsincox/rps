@@ -10,8 +10,9 @@
             <i class="fa fa-plus"></i> Add Student
         </a>
     </h1>
+
     <hr>
-    <table class="table table-bordered table-striped table-hover">
+    <table  id="data-table-search" cellspacing="0" width="100%" class="table table-bordered table-striped table-hover">
         <thead>
         <tr>
             <th>SL</th>
@@ -32,11 +33,12 @@
             <?php
                 $i = 0;
             ?>
+
             @foreach($students as $key=>$student)
                 <tr>
                     <td>{{ ++$i }}</td>
-                    <td>{{ $student->id }}</td>
-                    <td>{{ $student->name }}</td>
+                    <td><strong>{{ $student->id }}</strong></td>
+                    <td><strong>{{  $student->name  }}</strong></td>
                     <td>{{ $student->roll_no }}</td>
                     <td>{{ $student->level->name }}</td>
                     <td>{{ $student->section->name }}</td>
@@ -48,7 +50,15 @@
                     <td>{!! Html::link("student/$student->id/edit",' Edit', ['class' => 'fa fa-edit btn btn-success']) !!}</td>
                 </tr>
             @endforeach
+
         </tbody>
     </table>
-    {{ $students->render() }}
+    {{--{{ $students->render() }}--}}
+
+
 @endsection
+
+@section('script')
+    {!! Html::script('js/data_table_search.js') !!}
+@endsection
+

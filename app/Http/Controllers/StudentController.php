@@ -25,7 +25,7 @@ class StudentController extends Controller
     {
         $students = Student::with(['level', 'section', 'year'])
             ->orderBy('id', 'desc')
-            ->paginate(3);
+            ->get();
         //dd($students);
        //return $students;
         return view('student.index', compact('students'));

@@ -156,8 +156,10 @@ class ResultController extends Controller
                                     ->where('year_id', $request->year_id)
                                     ->get();
             if( count($deleteResult) ) {
-                ResultDetail::where('result_id', $deleteResult[0]->id)->delete();
-                Result::where('student_id', $request->student_id)->delete();
+                //ResultDetail::where('result_id', $deleteResult[0]->id)->delete();
+                //Result::where('student_id', $request->student_id)->delete();
+                flash()->error('This Student already exist in this Class, Term & Year.');
+                return redirect()->back();
             }
 
             $result = Result::create($request->all());
