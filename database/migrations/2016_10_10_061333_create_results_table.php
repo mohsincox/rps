@@ -19,8 +19,8 @@ class CreateResultsTable extends Migration
             $table->integer('level_id')->unsigned();
             $table->integer('term_id')->unsigned();
             $table->integer('year_id')->unsigned();
-            $table->float('total_point');
-            $table->float('grade_point_avg');
+            $table->float('total_point')->default(0.00);
+            $table->float('grade_point_avg')->default(0.00);
             $table->string('result')->nullable();
             $table->timestamps();
         });

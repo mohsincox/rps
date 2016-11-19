@@ -149,6 +149,13 @@ class ResultController extends Controller
             }
         }
 
+        $student = Student::find($request->student_id);
+        if(!count($student)){
+            flash()->error('There is no Student in this ID');
+            return redirect()->back();
+        }
+        
+
         if(count($cart)){
             $deleteResult = Result::where('student_id', $request->student_id)
                                     ->where('level_id', $request->level_id)

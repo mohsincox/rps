@@ -11,7 +11,7 @@
         </a>
     </h1>
     <hr>
-    <table class="table table-bordered table-striped table-hover">
+    <table id="data-table-search" cellspacing="0" width="100%" class="table table-bordered table-striped table-hover">
         <thead>
         <tr>
             <th>ID</th>
@@ -33,8 +33,8 @@
         @foreach($results as $result)
             <tr>
                 <td>{{ $result->id }}</td>
-                <td>{{ $result->student_id }}</td>
-                <td>{{ $result->student->name }}</td>
+                <td><strong>{{ $result->student_id }}</strong></td>
+                <td><strong>{{ $result->student->name }}</strong></td>
                 <td>{{ $result->student->roll_no }}</td>
                 {{--<td>{{ $result->student->level->name }}</td>--}}
                 <td>{{ $result->level->name }}</td>
@@ -42,8 +42,8 @@
                 <td>{{ $result->term->name }}</td>
                 <td>{{ $result->year->year }}</td>
                 <td>{{ $result->total_point }}</td>
-                <td>{{ round($result->total_point/11, 2, PHP_ROUND_HALF_UP) }}</td>
-                <td>{{ $result->result }}</td>
+                <td><strong>{{ round($result->total_point/11, 2, PHP_ROUND_HALF_UP) }}</strong></td>
+                <td><strong>{{ $result->result }}</strong></td>
                 <td>{!! Html::link("result/$result->id",' View', ['class' => 'fa fa-eye btn btn-success btn-xs']) !!}</td>
                 <td><a class="btn btn-danger btn-xs" data-toggle="modal" data-target="#myModal-{{ $result->id }}">
                         <i class="fa fa-trash"></i> Delete
@@ -78,4 +78,8 @@
         </tbody>
     </table>
 
+@endsection
+
+@section('script')
+    {!! Html::script('js/data_table_search.js') !!}
 @endsection
