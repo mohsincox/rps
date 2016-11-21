@@ -51,7 +51,7 @@
                     <div class="input-group required">
                         {!! Form::text('student_id',null, ['id' => 'student_id', 'class' =>'form-control', 'autocomplete' => 'off', 'placeholder' => 'Enter Student ID', 'required' => 'required' ]) !!}
                         <span class="input-group-btn">
-                            <button type="button" id="student_id_search" class="btn btn-danger"><i class="fa fa-search"></i> Search</button>
+                            <button type="button" id="student_id_search" data-url="{{url('/result/student-name-show')}}" class="btn btn-danger"><i class="fa fa-search"></i> Search</button>
                         </span>
                     </div>
                     <span class="help-block text-danger">
