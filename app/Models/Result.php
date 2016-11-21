@@ -11,8 +11,9 @@ class Result extends Model
     protected $fillable = [
         'student_id',
         'level_id',
-        'term_id',
+        'section_id',
         'year_id',
+        'term_id',
         'total_point',
         'grade_point_avg',
         'result'
@@ -28,13 +29,14 @@ class Result extends Model
         return $this->belongsTo(Term::class);
     }
 
-    public function year()
-    {
-        return $this->belongsTo(Year::class);
-    }
+//    public function year()
+//    {
+//        return $this->belongsTo(Year::class);
+//    }
 
-    public function level()
-    {
-        return $this->belongsTo(Level::class);
-    }
+//    public function level()
+//    {
+//        return $this->belongsTo(Level::class);
+//    }
+
 }

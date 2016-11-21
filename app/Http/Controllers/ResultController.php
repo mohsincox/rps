@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Level;
 use App\Models\Result;
 use App\Models\ResultDetail;
+use App\Models\Section;
 use App\Models\Student;
 use App\Models\Subject;
 use App\Models\Term;
@@ -27,7 +28,7 @@ class ResultController extends Controller
 
     public function index()
     {
-        $results = Result::with(['student', 'level', 'term', 'year', 'student.level', 'student.section'])->get();
+        $results = Result::with(['term','student.level', 'student.section', 'student.year'])->get();
 
         return view('result.index', compact('results'));
     }
@@ -140,6 +141,8 @@ class ResultController extends Controller
 
     public function saveCart(ResultDetailRequest $request)
     {
+        //return $request->all();
+        //return $student = Student::find($request->student_id);
         $cart = Cart::instance($this->resultCart)->content();
 
         foreach( $cart as $c ) {
@@ -158,18 +161,25 @@ class ResultController extends Controller
 
         if(count($cart)){
             $deleteResult = Result::where('student_id', $request->student_id)
-                                    ->where('level_id', $request->level_id)
+                                    ->where('level_id', $student->level_id)
+                                    ->where('section_id', $student->term_id)
+                                    ->where('year_id', $student->year_id)
                                     ->where('term_id', $request->term_id)
-                                    ->where('year_id', $request->year_id)
                                     ->get();
             if( count($deleteResult) ) {
                 //ResultDetail::where('result_id', $deleteResult[0]->id)->delete();
                 //Result::where('student_id', $request->student_id)->delete();
-                flash()->error('This Student already exist in this Class, Term & Year.');
+                flash()->error('This Student already exist in this Term.');
                 return redirect()->back();
             }
 
-            $result = Result::create($request->all());
+            $result = Result::create([
+                                        'student_id' => $request->student_id,
+                                        'level_id' => $student->level_id,
+                                        'section_id' => $student->section_id,
+                                        'year_id' => $student->year_id,
+                                        'term_id' => $request->term_id,
+                                     ]);
 
             $data = [];
             $totalGradePoint = 0;
@@ -195,9 +205,10 @@ class ResultController extends Controller
 
         $result->update([
                             'student_id' => $request->student_id,
-                            'level_id' => $request->level_id,
+                            'level_id' => $student->level_id,
+                            'section_id' => $student->section_id,
+                            'year_id' => $student->year_id,
                             'term_id' => $request->term_id,
-                            'year_id' => $request->year_id,
                             'total_point' => $totalGradePoint
                         ]);
         $this->clearAllSubjectsAfterSave();
@@ -208,9 +219,7 @@ class ResultController extends Controller
     public function show($id)
     {
         $result = Result::with([
-                                   'student',
                                    'term',
-                                   'year',
                                    'student.level',
                                    'student.section',
                                    'student.year'
@@ -218,10 +227,10 @@ class ResultController extends Controller
                             ->find($id);
 
         $resultDetailsBySubject = Subject::with(
-            ['resultDetails' => function($query) use($result) {
-                $query->where('result_id', $result->id);
-            }]
-        )->get();
+                ['resultDetails' => function($query) use($result) {
+                    $query->where('result_id', $result->id);
+                }]
+            )->get();
 
         $totalPoint = 0;
         $isFail = false;
@@ -266,18 +275,20 @@ class ResultController extends Controller
     public function showResultForm()
     {
         $classList = Level::pluck('name', 'id');
-        $termList = Term::pluck('name', 'id');
+        $sectionList = Section::pluck('name', 'id');
         $yearList = Year::pluck('year', 'id');
+        $termList = Term::pluck('name', 'id');
 
-        return view('result.report.form', compact('classList', 'termList', 'yearList'));
+        return view('result.report.form', compact('classList', 'termList', 'yearList', 'sectionList'));
     }
 
     public function showResult(Request $request)
     {
-        $results = Result::with(['student', 'level', 'term', 'year'])
+        $results = Result::with(['student.level', 'student.section', 'student.year', 'term'])
             ->where('level_id', $request->level_id)
-            ->where('term_id', $request->term_id)
+            ->where('section_id', $request->section_id)
             ->where('year_id', $request->year_id)
+            ->where('term_id', $request->term_id)
             ->orderBy('grade_point_avg', 'desc')
             ->get();
 

@@ -1,9 +1,10 @@
 @extends('layouts.app')
 
 @section('content')
-    <h3>Class {{ $results[0]->level->name }}</h3>
+    <h3>Class {{ $results[0]->student->level->name }}</h3>
+    <h3>Section {{ $results[0]->student->section->name }}</h3>
+    <h3>Year {{ $results[0]->student->year->year }}</h3>
     <h3>Term {{ $results[0]->term->name }}</h3>
-    <h3>Year {{ $results[0]->year->year }}</h3>
 
     <hr>
     <table class="table table-bordered table-striped table-hover">

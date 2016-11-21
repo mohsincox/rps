@@ -64,15 +64,15 @@
                 <span id="student_name_show"></span>
             </div>
 
-            <div class="required form-group" {{ $errors->has('level_id') ? 'has-error' : '' }}>
-                {!! Form::label('level_id', 'Select Class', ['class' => 'control-label col-sm-12']) !!}
-                <div class="col-sm-12">
-                    {!! Form::select('level_id', $classList, null, ['class' => 'form-control chosen', 'placeholder' => 'Select Class', 'id' => '', 'required']) !!}
-                    <span class="help-block text-danger">
-                            {{ $errors->first('level_id') }}
-                        </span>
-                </div>
-            </div>
+            {{--<div class="required form-group" {{ $errors->has('level_id') ? 'has-error' : '' }}>--}}
+                {{--{!! Form::label('level_id', 'Select Class', ['class' => 'control-label col-sm-12']) !!}--}}
+                {{--<div class="col-sm-12">--}}
+                    {{--{!! Form::select('level_id', $classList, null, ['class' => 'form-control chosen', 'placeholder' => 'Select Class', 'id' => '', 'required']) !!}--}}
+                    {{--<span class="help-block text-danger">--}}
+                            {{--{{ $errors->first('level_id') }}--}}
+                        {{--</span>--}}
+                {{--</div>--}}
+            {{--</div>--}}
 
             <div class="required form-group" {{ $errors->has('term_id') ? 'has-error' : '' }}>
                 {!! Form::label('term_id', 'Select Term', ['class' => 'control-label col-sm-12']) !!}
@@ -84,15 +84,15 @@
                 </div>
             </div>
 
-            <div class="required form-group" {{ $errors->has('year_id') ? 'has-error' : '' }}>
-                {!! Form::label('year_id', 'Select Year', ['class' => 'control-label col-sm-12']) !!}
-                <div class="col-sm-12">
-                    {!! Form::select('year_id', $yearList, null, ['class' => 'form-control chosen', 'placeholder' => 'Select Year', 'required']) !!}
-                    <span class="help-block text-danger">
-                            {{ $errors->first('year_id') }}
-                        </span>
-                </div>
-            </div>
+            {{--<div class="required form-group" {{ $errors->has('year_id') ? 'has-error' : '' }}>--}}
+                {{--{!! Form::label('year_id', 'Select Year', ['class' => 'control-label col-sm-12']) !!}--}}
+                {{--<div class="col-sm-12">--}}
+                    {{--{!! Form::select('year_id', $yearList, null, ['class' => 'form-control chosen', 'placeholder' => 'Select Year', 'required']) !!}--}}
+                    {{--<span class="help-block text-danger">--}}
+                            {{--{{ $errors->first('year_id') }}--}}
+                        {{--</span>--}}
+                {{--</div>--}}
+            {{--</div>--}}
 
 
 

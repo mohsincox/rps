@@ -13,12 +13,12 @@
         </div>
     </div>
 
-    <div class="required form-group" {{ $errors->has('term_id') ? 'has-error' : '' }}>
-        {!! Form::label('term_id', 'Select Term', ['class' => 'control-label col-sm-3']) !!}
+    <div class="required form-group" {{ $errors->has('section_id') ? 'has-error' : '' }}>
+        {!! Form::label('section_id', 'Select Term', ['class' => 'control-label col-sm-3']) !!}
         <div class="col-sm-9">
-            {!! Form::select('term_id', $termList, null, ['class' => 'form-control', 'placeholder' => 'Select Term', 'required']) !!}
+            {!! Form::select('section_id', $sectionList, null, ['class' => 'form-control', 'placeholder' => 'Select Section', 'required']) !!}
             <span class="help-block text-danger">
-                {{ $errors->first('term_id') }}
+                {{ $errors->first('section_id') }}
             </span>
         </div>
     </div>
@@ -29,6 +29,16 @@
             {!! Form::select('year_id', $yearList, null, ['class' => 'form-control', 'placeholder' => 'Select Year', 'required']) !!}
             <span class="help-block text-danger">
                 {{ $errors->first('year_id') }}
+            </span>
+        </div>
+    </div>
+
+    <div class="required form-group" {{ $errors->has('term_id') ? 'has-error' : '' }}>
+        {!! Form::label('term_id', 'Select Term', ['class' => 'control-label col-sm-3']) !!}
+        <div class="col-sm-9">
+            {!! Form::select('term_id', $termList, null, ['class' => 'form-control', 'placeholder' => 'Select Term', 'required']) !!}
+            <span class="help-block text-danger">
+                {{ $errors->first('term_id') }}
             </span>
         </div>
     </div>

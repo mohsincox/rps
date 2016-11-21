@@ -87,7 +87,7 @@
                 ?>
                 @foreach($resultDetailsBySubject as  $details)
                     @if(!count($details->resultDetails))
-                        <tr style="background-color: yellow;">
+                        <tr style="background-color: #ffff80;">
                             <td>{{ ++$i }}</td>
                             <td>{{ $details->name }}</td>
                             <td>{{ $details->total_mark }}</td>
@@ -103,7 +103,7 @@
                         </tr>
                     @else
                         @if($details->resultDetails->first()->get_mark < $details->pass_mark)
-                            <tr style="background-color: red; color: white">
+                            <tr style="background-color: #ff9999; color: white">
                                 <td>{{ ++$i }}</td>
                                 <td>{{ $details->name }}</td>
                                 <td>{{ $details->total_mark }}</td>

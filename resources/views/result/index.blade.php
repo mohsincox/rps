@@ -36,11 +36,11 @@
                 <td><strong>{{ $result->student_id }}</strong></td>
                 <td><strong>{{ $result->student->name }}</strong></td>
                 <td>{{ $result->student->roll_no }}</td>
-                {{--<td>{{ $result->student->level->name }}</td>--}}
-                <td>{{ $result->level->name }}</td>
+                <td>{{ $result->student->level->name }}</td>
+                {{--<td>{{ $result->level->name }}</td>--}}
                 <td>{{ $result->student->section->name }}</td>
                 <td>{{ $result->term->name }}</td>
-                <td>{{ $result->year->year }}</td>
+                <td>{{ $result->student->year->year }}</td>
                 <td>{{ $result->total_point }}</td>
                 <td><strong>{{ round($result->total_point/11, 2, PHP_ROUND_HALF_UP) }}</strong></td>
                 <td><strong>{{ $result->result }}</strong></td>
