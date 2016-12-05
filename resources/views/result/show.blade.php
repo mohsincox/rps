@@ -2,8 +2,17 @@
 
 @section('content')
     <style>
+        .table-bordered>tbody>tr>td.absent {
+            background-color: #ffffcc !important;
+        }
+        .table-bordered>tbody>tr>td.fail {
+            background-color: #ffd9cc !important;
+        }
         @media print
         {
+            /*.table-bordered>tbody>tr>td.absent {*/
+                /*background-color: #ffff80 !important;*/
+            /*}*/
             .print-margin{
                 margin-top: 200px;
             }
@@ -87,15 +96,15 @@
                 ?>
                 @foreach($resultDetailsBySubject as  $details)
                     @if(!count($details->resultDetails))
-                        <tr style="background-color: #ffff80;">
-                            <td>{{ ++$i }}</td>
-                            <td>{{ $details->name }}</td>
-                            <td>{{ $details->total_mark }}</td>
-                            <td>{{ $details->pass_mark }}</td>
-                            <td><strong>{{ $details->resultDetails->first()->get_mark or 'Absent' }}</strong></td>
-                            <td>{{ $details->resultDetails->first()->get_mark_percentage or 'Absent' }}</td>
-                            <td>{{ $details->resultDetails->first()->grade_point or 'Absent' }}</td>
-                            <td>{{ $details->resultDetails->first()->grade or 'Absent' }}</td>
+                        <tr class="">
+                            <td class="absent">{{ ++$i }}</td>
+                            <td class="absent">{{ $details->name }}</td>
+                            <td class="absent">{{ $details->total_mark }}</td>
+                            <td class="absent">{{ $details->pass_mark }}</td>
+                            <td class="absent"><strong>{{ $details->resultDetails->first()->get_mark or 'Absent' }}</strong></td>
+                            <td class="absent">{{ $details->resultDetails->first()->get_mark_percentage or 'Absent' }}</td>
+                            <td class="absent">{{ $details->resultDetails->first()->grade_point or 'Absent' }}</td>
+                            <td class="absent">{{ $details->resultDetails->first()->grade or 'Absent' }}</td>
 
                             @if($i == 1)
                                 <td style="vertical-align: middle; text-align: center; background-color: white; color: gray;" rowspan={{ $resultDetailsBySubject->count() }}><strong>{{ $totalResult }}</strong></td>
@@ -103,15 +112,15 @@
                         </tr>
                     @else
                         @if($details->resultDetails->first()->get_mark < $details->pass_mark)
-                            <tr style="background-color: #ff9999; color: white">
-                                <td>{{ ++$i }}</td>
-                                <td>{{ $details->name }}</td>
-                                <td>{{ $details->total_mark }}</td>
-                                <td>{{ $details->pass_mark }}</td>
-                                <td><strong>{{ $details->resultDetails->first()->get_mark or 'Absent' }}</strong></td>
-                                <td>{{ $details->resultDetails->first()->get_mark_percentage or 'Absent' }}</td>
-                                <td>{{ $details->resultDetails->first()->grade_point or 'Absent' }}</td>
-                                <td>{{ $details->resultDetails->first()->grade or 'Absent' }}</td>
+                            <tr>
+                                <td class="fail">{{ ++$i }}</td>
+                                <td class="fail">{{ $details->name }}</td>
+                                <td class="fail">{{ $details->total_mark }}</td>
+                                <td class="fail">{{ $details->pass_mark }}</td>
+                                <td class="fail"><strong>{{ $details->resultDetails->first()->get_mark or 'Absent' }}</strong></td>
+                                <td class="fail">{{ $details->resultDetails->first()->get_mark_percentage or 'Absent' }}</td>
+                                <td class="fail">{{ $details->resultDetails->first()->grade_point or 'Absent' }}</td>
+                                <td class="fail">{{ $details->resultDetails->first()->grade or 'Absent' }}</td>
                                 @if($i==1)
                                     <td style="vertical-align: middle; text-align: center; background-color: white; color: black;" rowspan={{ $resultDetailsBySubject->count() }}><strong>{{ $totalResult }}</strong></td>
                                 @endif
