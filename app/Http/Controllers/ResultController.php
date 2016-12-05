@@ -238,16 +238,16 @@ class ResultController extends Controller
 
             if(count($details->resultDetails) == 0) {
                 $isFail = true;
-                $totalResult =  $isFail? 'Failed1' : $totalPoint;
-                $stringResult = 'Failed11';
+                $totalResult =  $isFail? 'Failed' : $totalPoint;
+                $stringResult = 'Failed';
                 $gradePointAvg = 0.00;
                 break;
             }
             else {
                 if($details->resultDetails->first()->get_mark < $details->pass_mark) {
                     $isFail = true;
-                    $totalResult =  $isFail? 'Failed2' : $totalPoint;
-                    $stringResult = 'Failed22';
+                    $totalResult =  $isFail? 'Failed' : $totalPoint;
+                    $stringResult = 'Failed';
                     $gradePointAvg = 0.00;
                     break;
                 }
