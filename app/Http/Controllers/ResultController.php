@@ -326,6 +326,7 @@ class ResultController extends Controller
             ->where('year_id', $request->year_id)
             ->where('term_id', $request->term_id)
             ->orderBy('total_get_mark', 'desc')
+            ->orderBy('fail_subject', 'asc')
             ->get();
 
         if(!count($results)) {
