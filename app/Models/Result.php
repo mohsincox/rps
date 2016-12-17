@@ -16,7 +16,9 @@ class Result extends Model
         'term_id',
         'total_point',
         'grade_point_avg',
-        'result'
+        'result',
+        'total_get_mark',
+        'fail_subject'
     ];
 
     public function student()

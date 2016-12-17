@@ -79,6 +79,7 @@
                                 <li><a href="{{ url('/result') }}">Result Show</a></li>
                                 <li><a href="{{ url('/result/create') }}">Result Create</a></li>
                                 <li><a href="{{ url('/result/show-result-form') }}">Class Wise Result</a></li>
+                                <li><a href="{{ url('/result/show-result-fail-form') }}">Class Wise Result With Fail</a></li>
                             </ul>
                         </li>
                         <li class="dropdown">

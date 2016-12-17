@@ -165,7 +165,7 @@ class StudentController extends Controller
             flash()->error('This Student with Roll No. '. $request->roll_no . ' already in exist that Class and Section.');
             return redirect()->back();
         }
-        flash()->message($student->name . ' Successfully Created');
+        flash()->message($student->name . ' Successfully Updated');
 
         return redirect('student');
     }

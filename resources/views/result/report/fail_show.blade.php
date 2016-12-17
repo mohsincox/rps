@@ -5,6 +5,7 @@
     <h3>Section: {{ $results[0]->student->section->name }}</h3>
     <h3>Year: {{ $results[0]->student->year->year }}</h3>
     <h3>Term: {{ $results[0]->term->name }}</h3>
+    <h3>Fail in {{ $results[0]->fail_subject }} Subject(s)</h3>
 
     <hr>
     <table id="data-table-search" cellspacing="0" width="100%" class="table table-bordered table-striped table-hover">

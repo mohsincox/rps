@@ -23,6 +23,8 @@ class CreateResultsTable extends Migration
             $table->float('total_point')->default(0.00);
             $table->float('grade_point_avg')->default(0.00);
             $table->string('result')->nullable();
+            $table->float('total_get_mark')->nullable();
+            $table->integer('fail_subject')->unsigned()->nullable();
             $table->timestamps();
         });
     }

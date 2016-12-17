@@ -24,7 +24,7 @@ class SubjectController extends Controller
 
     public function create()
     {
-        $subject = Subject::orderBy('created_at', 'desc')->first();
+        $subject = Subject::orderBy('id', 'desc')->first();
         if(isset($subject)) {
             if($subject->id >= 11) {
                 flash()->error('No permission to register subject');

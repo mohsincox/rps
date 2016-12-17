@@ -14,7 +14,7 @@
     <table id="data-table-search" cellspacing="0" width="100%" class="table table-bordered table-striped table-hover">
         <thead>
         <tr>
-            <th>ID</th>
+            {{--<th>ID</th>--}}
             <th>Student Id</th>
             <th>Student Name</th>
             <th>Roll No</th>
@@ -22,9 +22,11 @@
             <th>Section</th>
             <th>Term</th>
             <th>Year</th>
-            <th>Total Point</th>
-            <th>Grade Point Avg</th>
+            {{--<th>Total Point</th>--}}
+            <th>GPA</th>
+            <th>Fail Subject(s)</th>
             <th>Result</th>
+            <th>Total Marks</th>
             <th>View</th>
             <th>Delete</th>
         </tr>
@@ -32,18 +34,19 @@
         <tbody>
         @foreach($results as $result)
             <tr>
-                <td>{{ $result->id }}</td>
+                {{--<td>{{ $result->id }}</td>--}}
                 <td><strong>{{ $result->student_id }}</strong></td>
                 <td><strong>{{ $result->student->name }}</strong></td>
                 <td>{{ $result->student->roll_no }}</td>
                 <td>{{ $result->student->level->name }}</td>
-                {{--<td>{{ $result->level->name }}</td>--}}
                 <td>{{ $result->student->section->name }}</td>
                 <td>{{ $result->term->name }}</td>
                 <td>{{ $result->student->year->year }}</td>
-                <td>{{ $result->total_point }}</td>
+                {{--<td>{{ $result->total_point }}</td>--}}
                 <td><strong>{{ round($result->total_point/11, 2, PHP_ROUND_HALF_UP) }}</strong></td>
+                <td>{{ $result->fail_subject }}</td>
                 <td><strong>{{ $result->result }}</strong></td>
+                <td><strong>{{ $result->total_get_mark }}</strong></td>
                 <td>{!! Html::link("result/$result->id",' View', ['class' => 'fa fa-eye btn btn-success btn-xs']) !!}</td>
                 <td><a class="btn btn-danger btn-xs" data-toggle="modal" data-target="#myModal-{{ $result->id }}">
                         <i class="fa fa-trash"></i> Delete

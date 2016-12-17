@@ -28,7 +28,13 @@ class ResultController extends Controller
 
     public function index()
     {
-        $results = Result::with(['term','student.level', 'student.section', 'student.year'])->get();
+        $results = Result::with([
+                                    'term',
+                                    'student.level',
+                                    'student.section',
+                                    'student.year'
+                                ])
+                                ->get();
 
         return view('result.index', compact('results'));
     }
@@ -162,14 +168,14 @@ class ResultController extends Controller
         if(count($cart)){
             $deleteResult = Result::where('student_id', $request->student_id)
                                     ->where('level_id', $student->level_id)
-                                    ->where('section_id', $student->term_id)
+                                    ->where('section_id', $student->section_id)
                                     ->where('year_id', $student->year_id)
                                     ->where('term_id', $request->term_id)
                                     ->get();
             if( count($deleteResult) ) {
                 //ResultDetail::where('result_id', $deleteResult[0]->id)->delete();
                 //Result::where('student_id', $request->student_id)->delete();
-                flash()->error('This Student already exist in this Term.');
+                flash()->error("This Student's Result already created in this Term.");
                 return redirect()->back();
             }
 
@@ -183,6 +189,7 @@ class ResultController extends Controller
 
             $data = [];
             $totalGradePoint = 0;
+            $totalGetMark = 0;
             foreach ($cart as $item) {
 
                 $data= [
@@ -196,6 +203,7 @@ class ResultController extends Controller
 
                  $resultDetails = ResultDetail::create($data);
                  $totalGradePoint += $resultDetails->grade_point;
+                 $totalGetMark += $resultDetails->get_mark;
 
             }
         }else{
@@ -209,7 +217,8 @@ class ResultController extends Controller
                             'section_id' => $student->section_id,
                             'year_id' => $student->year_id,
                             'term_id' => $request->term_id,
-                            'total_point' => $totalGradePoint
+                            'total_point' => $totalGradePoint,
+                            'total_get_mark' => $totalGetMark
                         ]);
         $this->clearAllSubjectsAfterSave();
 
@@ -241,6 +250,7 @@ class ResultController extends Controller
                 $totalResult =  $isFail? 'Failed' : $totalPoint;
                 $stringResult = 'Failed';
                 $gradePointAvg = 0.00;
+                $totalMarks = $result->total_get_mark;
                 break;
             }
             else {
@@ -249,6 +259,7 @@ class ResultController extends Controller
                     $totalResult =  $isFail? 'Failed' : $totalPoint;
                     $stringResult = 'Failed';
                     $gradePointAvg = 0.00;
+                    $totalMarks = $result->total_get_mark;
                     break;
                 }
                 else {
@@ -258,18 +269,43 @@ class ResultController extends Controller
                     $totalResult =  round($gpa, 2, PHP_ROUND_HALF_UP);
                     $stringResult = strval($totalResult);
                     $gradePointAvg = $totalResult;
+                    $totalMarks = $result->total_get_mark;
 
                 }
             }
         }
+
+        $totalAbsentCount = 0;
+        $tempAbsent = 0;
+        $tempFail = 0;
+        $totalFailCount = 0;
+        $notFailCount = 0;
+        foreach($resultDetailsBySubject as $failCountSubject) {
+            if(count($failCountSubject->resultDetails) == 0) {
+                $tempAbsent++;
+               // $totalAbsentCount += $tempAbsent;
+            }
+            else {
+                if($failCountSubject->resultDetails->first()->get_mark < $failCountSubject->pass_mark) {
+                    $tempFail++;
+                    //$totalFailCount += $tempFail;
+                }
+                else {
+                    $notFailCount = 0;
+                }
+            }
+
+        }
+        $totalFail = $tempAbsent + $tempFail + $notFailCount;
 //        echo $totalResult;
 //        return null;
         $result->update([
                        'result' => $stringResult,
-                       'grade_point_avg' => $gradePointAvg
+                       'grade_point_avg' => $gradePointAvg,
+                        'fail_subject' => $totalFail
                   ]);
 
-        return view('result.show', compact('result', 'resultDetailsBySubject', 'totalResult', 'gradePointAvg'));
+        return view('result.show', compact('result', 'resultDetailsBySubject', 'totalResult', 'gradePointAvg', 'totalMarks', 'totalFail'));
     }
 
     public function showResultForm()
@@ -289,7 +325,7 @@ class ResultController extends Controller
             ->where('section_id', $request->section_id)
             ->where('year_id', $request->year_id)
             ->where('term_id', $request->term_id)
-            ->orderBy('grade_point_avg', 'desc')
+            ->orderBy('total_get_mark', 'desc')
             ->get();
 
         if(!count($results)) {
@@ -317,5 +353,35 @@ class ResultController extends Controller
         flash()->error('Successfully Deleted.');
 
         return redirect('result');
+    }
+
+    public function showResultFailForm()
+    {
+        $classList = Level::pluck('name', 'id');
+        $sectionList = Section::pluck('name', 'id');
+        $yearList = Year::pluck('year', 'id');
+        $termList = Term::pluck('name', 'id');
+
+        return view('result.report.fail_form', compact('classList', 'termList', 'yearList', 'sectionList'));
+    }
+
+    public function showResultFail(Request $request)
+    {
+        $results = Result::with(['student.level', 'student.section', 'student.year', 'term'])
+            ->where('level_id', $request->level_id)
+            ->where('section_id', $request->section_id)
+            ->where('year_id', $request->year_id)
+            ->where('term_id', $request->term_id)
+            ->where('fail_subject', $request->fail_subject)
+            ->orderBy('total_get_mark', 'desc')
+            ->get();
+
+        if(!count($results)) {
+            flash()->error('There is no result');
+
+            return redirect()->back();
+        }
+
+        return view('result.report.fail_show', compact('results'));
     }
 }
