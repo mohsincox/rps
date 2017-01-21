@@ -2,7 +2,7 @@
 
 @section('content')
 
-    
+
     <div class="col-sm-8">
         <div>
             <table class="table table-bordered table-striped table-hover">
