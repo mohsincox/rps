@@ -28,6 +28,7 @@
             <th>Result</th>
             <th>Total Marks</th>
             <th>View</th>
+            <th>Edit</th>
             <th>Delete</th>
         </tr>
         </thead>
@@ -48,6 +49,7 @@
                 <td><strong>{{ $result->result }}</strong></td>
                 <td><strong>{{ $result->total_get_mark }}</strong></td>
                 <td>{!! Html::link("result/$result->id",' View', ['class' => 'fa fa-eye btn btn-success btn-xs']) !!}</td>
+                <td>{!! Html::link("result/$result->id/edit",' Edit', ['class' => 'fa fa-eye btn btn-success btn-xs']) !!}</td>
                 <td><a class="btn btn-danger btn-xs" data-toggle="modal" data-target="#myModal-{{ $result->id }}">
                         <i class="fa fa-trash"></i> Delete
                     </a>

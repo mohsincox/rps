@@ -27,7 +27,6 @@
                         </span>
                     </div>
                 </div>
-
                 <div class="form-group">
                     <div class="col-sm-12 col-sm-offset-0">
                         {{--<i class="fa fa-plus"></i>--}}
@@ -37,13 +36,10 @@
                                               'type'      => 'submit',
                                           ]) !!}
                     </div>
-
                 </div>
             {!! Form::close() !!}
 
-
             {!! Form::open(['url' => 'result/save-cart', 'method' => 'post', 'class' => '', 'role' => '' ]) !!}
-
 
             <div class="required form-group{{ $errors->has('student_id') ? ' has-error' : '' }}">
                 {!! Form::label('student_id', 'Student ID', ['class' => 'col-sm-12 control-label']) !!}
@@ -59,57 +55,27 @@
                     </span>
                 </div>
             </div>
-
             <div>
                 <span id="student_name_show"></span>
             </div>
-
-            {{--<div class="required form-group" {{ $errors->has('level_id') ? 'has-error' : '' }}>--}}
-                {{--{!! Form::label('level_id', 'Select Class', ['class' => 'control-label col-sm-12']) !!}--}}
-                {{--<div class="col-sm-12">--}}
-                    {{--{!! Form::select('level_id', $classList, null, ['class' => 'form-control chosen', 'placeholder' => 'Select Class', 'id' => '', 'required']) !!}--}}
-                    {{--<span class="help-block text-danger">--}}
-                            {{--{{ $errors->first('level_id') }}--}}
-                        {{--</span>--}}
-                {{--</div>--}}
-            {{--</div>--}}
-
             <div class="required form-group" {{ $errors->has('term_id') ? 'has-error' : '' }}>
                 {!! Form::label('term_id', 'Select Term', ['class' => 'control-label col-sm-12']) !!}
                 <div class="col-sm-12">
                     {!! Form::select('term_id', $termList, null, ['class' => 'form-control chosen', 'placeholder' => 'Select Term', 'required']) !!}
                     <span class="help-block text-danger">
-                            {{ $errors->first('term_id') }}
-                        </span>
+                        {{ $errors->first('term_id') }}
+                    </span>
                 </div>
             </div>
-
-            {{--<div class="required form-group" {{ $errors->has('year_id') ? 'has-error' : '' }}>--}}
-                {{--{!! Form::label('year_id', 'Select Year', ['class' => 'control-label col-sm-12']) !!}--}}
-                {{--<div class="col-sm-12">--}}
-                    {{--{!! Form::select('year_id', $yearList, null, ['class' => 'form-control chosen', 'placeholder' => 'Select Year', 'required']) !!}--}}
-                    {{--<span class="help-block text-danger">--}}
-                            {{--{{ $errors->first('year_id') }}--}}
-                        {{--</span>--}}
-                {{--</div>--}}
-            {{--</div>--}}
-
-
-
         </div>
-
-
 
         <div class="col-sm-8">
             <div>
-
                 <table class="table table-bordered table-striped table-hover">
                     <thead>
                     <tr>
                         <th>SL</th>
-                        {{--<th>Ledger Id</th>--}}
                         <th>Subject Name</th>
-                        {{--<th>Quantity</th>--}}
                         <th>Marks</th>
                         <th>Mark Percentage</th>
                         <th>Grade</th>
@@ -125,9 +91,7 @@
                     @foreach($addedList as $key=>$item)
                         <tr>
                             <td>{{ $i++ }}</td>
-                            {{--<td>{{$item->id }}</td>--}}
                             <td>{{ $item->name }}</td>
-                            {{--<td>{{ $item->qty }}</td>--}}
                             <td>{{ $item->price }}</td>
                             <td>{{ $item->options->getMarkPercentage }}</td>
                             <td>{{ $item->options->grade }}</td>
