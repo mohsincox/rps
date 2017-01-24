@@ -2,6 +2,7 @@
 
 @section('content')
 
+    <span id="result-info"></span>
 
     <div class="col-sm-8">
         <div>
@@ -50,7 +51,7 @@
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
-                                        {{ Html::link('result/remove-one-subject-edit/'.$resultId.'/'. $key, 'Delete', ['class' => 'btn btn-danger']) }}
+                                        {{ Html::link('result/remove-one-subject-edit/'.$resultId.'/'. $key, 'Delete', ['class' => 'btn btn-danger delete-cart-item']) }}
                                     </div>
                                 </div>
                             </div>
@@ -98,3 +99,7 @@
         </div>
     </div>
 @endsection()
+
+@section('script')
+    {!! Html::script('js/delete_cart_item.js') !!}
+@endsection
