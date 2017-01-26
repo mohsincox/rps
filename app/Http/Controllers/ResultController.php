@@ -127,9 +127,10 @@ class ResultController extends Controller
         //return $resultId.' '.$key;
         $cartName = $this->_resultEditCart.$resultId;
         Cart::instance($cartName)->remove($key);
+        $addedList = Cart::instance($cartName)->content();
         flash()->warning('One subject is removed from List.');
 
-        return redirect()->back();
+        return view('result._partial_edit', compact('addedList', 'resultId'));
     }
 
     public function clearAllSubjects()
@@ -397,7 +398,7 @@ class ResultController extends Controller
         return view('result.report.fail_show', compact('results'));
     }
 
-    public function edit(Request $request, $id)
+    public function edit($id)
     {
         $result = Result::find($id);
         $resultId = $result->id;
