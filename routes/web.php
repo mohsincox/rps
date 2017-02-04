@@ -28,6 +28,7 @@ Route::resource('/subject', 'SubjectController');
 
 
 Route::post('/result/add-to-cart', 'ResultController@addToCart');
+Route::post('/result/add-to-cart-edit', 'ResultController@addToCartEdit');
 Route::get('/result/remove-one-subject/{id?}', 'ResultController@removeOneSubject');
 Route::get('/result/remove-one-subject-edit/{resultId?}/{key?}', 'ResultController@removeOneSubjectEdit');
 Route::get('/result/clear-all-subjects', 'ResultController@clearAllSubjects');

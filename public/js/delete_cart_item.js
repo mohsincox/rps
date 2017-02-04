@@ -10,3 +10,13 @@ $(function() {
         });
     });
 });
+
+$(function() {
+    $(document).on('click', '.add-cart-item-edit', function(e){
+        e.preventDefault();
+        var url = $(this).attr('href');
+        $.get(url, function (data) {
+            $('#result-info').html(data);
+        });
+    });
+});

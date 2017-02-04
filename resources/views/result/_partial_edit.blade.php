@@ -1,3 +1,41 @@
+<div class="col-sm-4">
+    {!! Form::open(['url' => 'result/add-to-cart-edit', 'method' => 'post']) !!}
+    <div class="required form-group" {{ $errors->has('subject_id') ? 'has-error' : '' }}>
+        {!! Form::label('subject_id', 'Select Subject', ['class' => 'control-label col-sm-12']) !!}
+        <div class="col-sm-12">
+            {!! Form::select('subject_id', $subjectList, null, ['class' => 'form-control chosen', 'placeholder' => 'Select Subject', 'required']) !!}
+            <span class="help-block text-danger">
+                {{ $errors->first('subject_id') }}
+            </span>
+        </div>
+    </div>
+    <div class="required form-group" {{ $errors->has('get_mark') ? 'has-error' : '' }}>
+        {!! Form::label('get_mark', 'Get Mark', ['class' => 'control-label col-sm-12']) !!}
+        <div class="col-sm-12">
+            {!! Form::number('get_mark', null, ['class' => 'form-control', 'placeholder' => 'Enter Get Mark', 'id' => 'get_mark', 'step' => 'any', 'required']) !!}
+            <span class="help-block text-danger" style="color: red">
+                {{ $errors->first('get_mark') }}
+            </span>
+        </div>
+    </div>
+
+    {!! Form::hidden('result_id', $resultId) !!}
+
+    <div class="form-group">
+        <div class="col-sm-12 col-sm-offset-0">
+            {{--<i class="fa fa-plus"></i>--}}
+            {{--{!! Form::submit('Add Subject', ['class' => 'btn btn-primary']) !!}--}}
+            {!! Form::button('<i class="fa fa-plus"></i> Add Subject', [
+                                  'class'     => 'btn btn-primary add-cart-item-edit',
+                                  'type'      => 'submit',
+                              ]) !!}
+        </div>
+    </div>
+    {!! Form::close() !!}
+</div>
+
+
+
 <div class="col-sm-8">
     <div>
         <table class="table table-bordered table-striped table-hover">
