@@ -382,7 +382,36 @@ class ResultController extends Controller
 
             return redirect()->back();
         }
-
         return view('result.report.fail_show', compact('results'));
+    }
+
+    public function printForm()
+    {
+        $classList = Level::pluck('name', 'id');
+        $yearList = Year::pluck('year', 'id');
+        $termList = Term::pluck('name', 'id');
+
+        //return view('result.report.fail_form', compact('classList', 'termList', 'yearList', 'sectionList'));
+        return view('result.report.print_result.form', compact('classList', 'termList', 'yearList'));
+    }
+
+    public function printShow(Request $request)
+    {
+        $results = Result::with(['student.level', 'student.section', 'student.year', 'term'])
+                         ->where('level_id', $request->level_id)
+                         ->where('year_id', $request->year_id)
+                         ->where('term_id', $request->term_id)
+                         ->where('fail_subject', $request->fail_subject)
+                         ->orderBy('total_get_mark', 'desc')
+                         ->get();
+
+        if(!count($results)) {
+            flash()->error('There is no result');
+
+            return redirect()->back();
+        }
+
+        //return view('result.report.fail_show', compact('results'));
+        return view('result.report.print_result.show', compact('results'));
     }
 }

@@ -38,5 +38,8 @@ Route::post('/result/show-result', 'ResultController@showResult');
 Route::get('/result/show-result-fail-form', 'ResultController@showResultFailForm');
 Route::post('/result/show-result-fail', 'ResultController@showResultFail');
 
+Route::get('/result/print-form', 'ResultController@printForm');
+Route::post('/result/print-show', 'ResultController@printShow');
+
 Route::get('/result/student-name-show', 'ResultController@studentNameShow');
 Route::resource('/result', 'ResultController');
