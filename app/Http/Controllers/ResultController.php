@@ -20,6 +20,7 @@ use Cart;
 class ResultController extends Controller
 {
     protected $resultCart = 'resultCart';
+    protected $_resultEditCart = '_resultEditCart';
 
     public function __construct()
     {
@@ -385,6 +386,7 @@ class ResultController extends Controller
         return view('result.report.fail_show', compact('results'));
     }
 
+
     public function printForm()
     {
         $classList = Level::pluck('name', 'id');
@@ -397,7 +399,9 @@ class ResultController extends Controller
 
     public function printShow(Request $request)
     {
-        $results = Result::with(['student.level', 'student.section', 'student.year', 'term'])
+        $results = Result::with(
+            ['student.level', 'student.section', 'student.year', 'term']
+        )
                          ->where('level_id', $request->level_id)
                          ->where('year_id', $request->year_id)
                          ->where('term_id', $request->term_id)
@@ -405,7 +409,7 @@ class ResultController extends Controller
                          ->orderBy('total_get_mark', 'desc')
                          ->get();
 
-        if(!count($results)) {
+        if (!count($results)) {
             flash()->error('There is no result');
 
             return redirect()->back();
@@ -413,5 +417,147 @@ class ResultController extends Controller
 
         //return view('result.report.fail_show', compact('results'));
         return view('result.report.print_result.show', compact('results'));
+    }
+    public function edit($id)
+    {
+        $result = Result::find($id);
+        $resultId = $result->id;
+        $cartName = $this->_resultEditCart.$result->id;
+
+        $resultDetails = ResultDetail::where('result_id', $result->id)->get();
+        //$cart = Cart::instance($cartName)->content();
+        foreach($resultDetails as $detail)
+        {
+            $subject = Subject::find($detail->subject_id);
+            $getMarkPercentage = (100 * $detail->get_mark) / $subject->total_mark;
+            $getMarkPercentage = round($getMarkPercentage);
+            //$this->validate($request, $this->addResultRule);
+            //return $request->all();
+            if( ($getMarkPercentage >= 80) && ($getMarkPercentage <= 100)) {
+                $grade = 'A+';
+                $gradePoint = 5;
+            }
+            else if( ($getMarkPercentage >= 70) && ($getMarkPercentage <= 79)) {
+                $grade = 'A';
+                $gradePoint = 4;
+            }
+            else if( ($getMarkPercentage >= 60) && ($getMarkPercentage <= 69)) {
+                $grade = 'A-';
+                $gradePoint = 3.5;
+            }
+            else if( ($getMarkPercentage >= 50) && ($getMarkPercentage <= 59)) {
+                $grade = 'B';
+                $gradePoint = 3;
+            }
+            else if( ($getMarkPercentage >= 40) && ($getMarkPercentage <= 49)) {
+                $grade = 'C';
+                $gradePoint = 2;
+            }
+            else if( ($getMarkPercentage >= 33) && ($getMarkPercentage <= 39)) {
+                $grade = 'D';
+                $gradePoint = 1;
+            }
+            else if( ($getMarkPercentage >= 0) && ($getMarkPercentage <= 32)) {
+                $grade = 'F';
+                $gradePoint = 0;
+            }
+            else {
+                $grade = null;
+                $gradePoint = '<strong style="color: red;">Wrong Input</strong>';
+            }
+            Cart::instance($cartName)->add([
+               'id' => $detail->subject_id,
+               'name' => $subject->name,
+               'qty' => 1,
+               'price' => $detail->get_mark,
+               'options' => ['subject' => $subject, 'grade' => $grade, 'gradePoint' => $gradePoint, 'getMarkPercentage' => $getMarkPercentage],
+           ]);
+        }
+        $addedList = Cart::instance($cartName)->content();
+        //dd($addedList);
+        $student = Student::find($result->student_id);
+        $term = Term::find($result->term_id);
+
+        $subjectList = Subject::pluck('name', 'id');
+
+        return view('result.edit', compact('addedList', 'resultId', 'student', 'term', 'subjectList'));
+    }
+
+    public function removeOneSubjectEdit($resultId, $key)
+    {
+        //return $resultId.' '.$key;
+        $cartName = $this->_resultEditCart.$resultId;
+        Cart::instance($cartName)->remove($key);
+        $addedList = Cart::instance($cartName)->content();
+        flash()->warning('One subject is removed from List.');
+
+        $subjectList = Subject::pluck('name', 'id');
+
+        return view('result._partial_edit', compact('addedList', 'resultId', 'subjectList'));
+    }
+
+    public function addToCartEdit(Request $request)
+    {
+        $subject = Subject::find($request->subject_id);
+        $getMarkPercentage = (100 * $request->get_mark) / $subject->total_mark;
+        $getMarkPercentage = round($getMarkPercentage);
+        //$this->validate($request, $this->addResultRule);
+        //return $request->all();
+        if( ($getMarkPercentage >= 80) && ($getMarkPercentage <= 100)) {
+            $grade = 'A+';
+            $gradePoint = 5;
+        }
+        else if( ($getMarkPercentage >= 70) && ($getMarkPercentage <= 79)) {
+            $grade = 'A';
+            $gradePoint = 4;
+        }
+        else if( ($getMarkPercentage >= 60) && ($getMarkPercentage <= 69)) {
+            $grade = 'A-';
+            $gradePoint = 3.5;
+        }
+        else if( ($getMarkPercentage >= 50) && ($getMarkPercentage <= 59)) {
+            $grade = 'B';
+            $gradePoint = 3;
+        }
+        else if( ($getMarkPercentage >= 40) && ($getMarkPercentage <= 49)) {
+            $grade = 'C';
+            $gradePoint = 2;
+        }
+        else if( ($getMarkPercentage >= 33) && ($getMarkPercentage <= 39)) {
+            $grade = 'D';
+            $gradePoint = 1;
+        }
+        else if( ($getMarkPercentage >= 0) && ($getMarkPercentage <= 32)) {
+            $grade = 'F';
+            $gradePoint = 0;
+        }
+        else {
+            $grade = null;
+            $gradePoint = '<strong style="color: red;">Wrong Input</strong>';
+        }
+        //return $request->subject_id;
+        $cartName = $this->_resultEditCart.$request->result_id;
+        $cartSubjects = Cart::instance($cartName)->content();
+        foreach($cartSubjects as $cartSubject) {
+
+            //echo $cartSubject->id;
+            if($cartSubject->id == $request->subject_id){
+
+                flash()->error('This Subject is Already Exist.');
+                return redirect()->back();
+            }
+        }
+        //return null;
+        //count($subject->id);
+        Cart::instance($cartName)->add([
+                                                   'id' => $request->subject_id,
+                                                   'name' => $subject->name,
+                                                   'qty' => 1,
+                                                   'price' => $request->get_mark,
+                                                   'options' => ['subject' => $subject, 'grade' => $grade, 'gradePoint' => $gradePoint, 'getMarkPercentage' => $getMarkPercentage],
+                                               ]);
+        //return $c = Cart::instance($cartName)->content();
+        return redirect('result/add-to-cart-edit');
+        //return view('result.edit', compact('addedList', 'resultId', 'student', 'term', 'subjectList'));
     }
 }
