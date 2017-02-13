@@ -423,7 +423,7 @@ class ResultController extends Controller
         $result = Result::find($id);
         $resultId = $result->id;
         $cartName = $this->_resultEditCart.$result->id;
-
+        Cart::instance($cartName)->destroy();
         $resultDetails = ResultDetail::where('result_id', $result->id)->get();
         //$cart = Cart::instance($cartName)->content();
         foreach($resultDetails as $detail)
@@ -498,6 +498,7 @@ class ResultController extends Controller
 
     public function addToCartEdit(Request $request)
     {
+        //return $request->result_id;
         $subject = Subject::find($request->subject_id);
         $getMarkPercentage = (100 * $request->get_mark) / $subject->total_mark;
         $getMarkPercentage = round($getMarkPercentage);
@@ -535,7 +536,10 @@ class ResultController extends Controller
             $grade = null;
             $gradePoint = '<strong style="color: red;">Wrong Input</strong>';
         }
-        //return $request->subject_id;
+
+        $subjectList = Subject::pluck('name', 'id');
+        $resultId = $request->result_id;
+
         $cartName = $this->_resultEditCart.$request->result_id;
         $cartSubjects = Cart::instance($cartName)->content();
         foreach($cartSubjects as $cartSubject) {
@@ -556,8 +560,8 @@ class ResultController extends Controller
                                                    'price' => $request->get_mark,
                                                    'options' => ['subject' => $subject, 'grade' => $grade, 'gradePoint' => $gradePoint, 'getMarkPercentage' => $getMarkPercentage],
                                                ]);
-        //return $c = Cart::instance($cartName)->content();
-        return redirect('result/add-to-cart-edit');
-        //return view('result.edit', compact('addedList', 'resultId', 'student', 'term', 'subjectList'));
+        $addedList = Cart::instance($cartName)->content();
+
+        return view('result._partial_edit', compact('addedList', 'resultId', 'subjectList'));
     }
 }
