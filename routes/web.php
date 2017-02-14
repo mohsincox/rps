@@ -33,6 +33,7 @@ Route::get('/result/remove-one-subject/{id?}', 'ResultController@removeOneSubjec
 Route::get('/result/remove-one-subject-edit/{resultId?}/{key?}', 'ResultController@removeOneSubjectEdit');
 Route::get('/result/clear-all-subjects', 'ResultController@clearAllSubjects');
 Route::post('/result/save-cart', 'ResultController@saveCart');
+Route::post('/result/save-cart-edit', 'ResultController@saveCartEdit');
 
 Route::get('/result/show-result-form', 'ResultController@showResultForm');
 Route::post('/result/show-result', 'ResultController@showResult');

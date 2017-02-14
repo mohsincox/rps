@@ -39,7 +39,8 @@
 
 
 <div class="col-sm-8">
-    <div>
+    {!! Form::open(['url' => 'result/save-cart-edit', 'method' => 'post']) !!}
+    {!! Form::hidden('result_id', $resultId, ['id' => 'result-id-no-need']) !!}
         <table class="table table-bordered table-striped table-hover">
             <thead>
             <tr>
@@ -132,6 +133,5 @@
                 </div>
             </div>
         </div>
-        {!! Form::close() !!}
-    </div>
+    {!! Form::close() !!}
 </div>

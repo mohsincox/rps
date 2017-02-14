@@ -164,16 +164,15 @@ class ResultController extends Controller
             flash()->error('There is no Student in this ID');
             return redirect()->back();
         }
-        
 
         if(count($cart)){
-            $deleteResult = Result::where('student_id', $request->student_id)
+            $existResult = Result::where('student_id', $request->student_id)
                                     ->where('level_id', $student->level_id)
                                     ->where('section_id', $student->section_id)
                                     ->where('year_id', $student->year_id)
                                     ->where('term_id', $request->term_id)
                                     ->get();
-            if( count($deleteResult) ) {
+            if( count($existResult) ) {
                 //ResultDetail::where('result_id', $deleteResult[0]->id)->delete();
                 //Result::where('student_id', $request->student_id)->delete();
                 flash()->error("This Student's Result already created in this Term.");
@@ -563,5 +562,100 @@ class ResultController extends Controller
         $addedList = Cart::instance($cartName)->content();
 
         return view('result._partial_edit', compact('addedList', 'resultId', 'subjectList'));
+    }
+
+    public function saveCartEdit(Request $request)
+    {
+        //return $request->all();
+        $result = Result::find($request->result_id);
+        $studentId = $result->student_id;
+        $termId = $result->term_id;
+        $student = Student::find($studentId);
+        $resultId = $request->result_id;
+
+        $cartName = $this->_resultEditCart.$request->result_id;
+        $cartSubjects = Cart::instance($cartName)->content();
+
+        foreach( $cartSubjects as $c ) {
+            if(is_string($c->options->gradePoint)) {
+                flash()->error('Wrong Input');
+                return redirect()->back();
+            }
+        }
+
+
+
+        if(count($cartSubjects)){
+            $existResult = Result::where('student_id', $studentId)
+                                 ->where('level_id', $student->level_id)
+                                 ->where('section_id', $student->section_id)
+                                 ->where('year_id', $student->year_id)
+                                 ->where('term_id', $termId)
+                                 ->get();
+            if( count($existResult) ) {
+                ResultDetail::where('result_id', $existResult[0]->id)->delete();
+                Result::where('student_id', $studentId)->delete();
+            }else {
+                flash()->error("This Student's Result does not updated in this Term.");
+                return redirect()->back();
+            }
+
+            $result = Result::create([
+                                         'student_id' => $studentId,
+                                         'level_id' => $student->level_id,
+                                         'section_id' => $student->section_id,
+                                         'year_id' => $student->year_id,
+                                         'term_id' => $termId,
+                                     ]);
+
+            $data = [];
+            $totalGradePoint = 0;
+            $totalGetMark = 0;
+            foreach ($cartSubjects as $item) {
+
+                $data= [
+                    'result_id' => $result->id,
+                    'subject_id' => $item->options->subject->id,
+                    'get_mark' => $item->price,
+                    'get_mark_percentage' => $item->options->getMarkPercentage,
+                    'grade' => $item->options->grade,
+                    'grade_point' => $item->options->gradePoint
+                ];
+
+                $resultDetails = ResultDetail::create($data);
+                $totalGradePoint += $resultDetails->grade_point;
+                $totalGetMark += $resultDetails->get_mark;
+
+            }
+        }else{
+            flash()->warning('No Subject has been added to List.');
+            return redirect()->back()->withInput();
+        }
+
+        $result->update([
+                            'student_id' => $studentId,
+                            'level_id' => $student->level_id,
+                            'section_id' => $student->section_id,
+                            'year_id' => $student->year_id,
+                            'term_id' => $termId,
+                            'total_point' => $totalGradePoint,
+                            'total_get_mark' => $totalGetMark
+                        ]);
+        $this->clearAllSubjectsAfterEdit($resultId);
+
+        return redirect('result/' . $result->id);
+    }
+
+    public function clearAllSubjectsAfterEdit($resultId)
+    {
+        $cartName = $this->_resultEditCart.$resultId;
+        if (Cart::instance($cartName)->count() > 0) {
+            Cart::instance($cartName)->destroy();
+//            flash()->error('All item(s) are removed from List.');
+            return redirect()->back();
+        }
+
+        flash()->warning('List is already Empty.');
+        return redirect()->back();
     }
 }
