@@ -51,7 +51,7 @@ class ResultController extends Controller
         return view('result.create', compact('studentList', 'termList', 'yearList', 'subjectList', 'addedList', 'classList'));
     }
 
-    public function addToCart(ResultRequest $request)
+    public function addToCart(Request $request)
     {
         $subject = Subject::find($request->subject_id);
         $getMarkPercentage = (100 * $request->get_mark) / $subject->total_mark;
@@ -111,7 +111,9 @@ class ResultController extends Controller
                       'options' => ['subject' => $subject, 'grade' => $grade, 'gradePoint' => $gradePoint, 'getMarkPercentage' => $getMarkPercentage],
                   ]);
 
-        return redirect('result/create');
+        //return redirect('result/create');
+        $addedList = Cart::instance($this->resultCart)->content();
+        return view('result._partial_create', compact('addedList'));
     }
 
     public function removeOneSubject($id)

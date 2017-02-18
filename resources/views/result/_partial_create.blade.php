@@ -1,46 +1,5 @@
-<div class="col-sm-4">
-    {!! Form::open(['url' => 'result/add-to-cart-edi', 'method' => 'post']) !!}
-    <div class="required form-group" {{ $errors->has('subject_id') ? 'has-error' : '' }}>
-        {!! Form::label('subject_id', 'Select Subject', ['class' => 'control-label col-sm-12']) !!}
-        <div class="col-sm-12">
-            {!! Form::select('subject_id', $subjectList, null, ['class' => 'form-control chosen', 'id' => 'subject-id', 'placeholder' => 'Select Subject', 'required']) !!}
-            <span class="help-block text-danger">
-                {{ $errors->first('subject_id') }}
-            </span>
-        </div>
-    </div>
-    <div class="required form-group" {{ $errors->has('get_mark') ? 'has-error' : '' }}>
-        {!! Form::label('get_mark', 'Get Mark', ['class' => 'control-label col-sm-12']) !!}
-        <div class="col-sm-12">
-            {!! Form::number('get_mark', null, ['class' => 'form-control', 'placeholder' => 'Enter Get Mark', 'id' => 'get-mark', 'step' => 'any', 'required']) !!}
-            <span class="help-block text-danger" style="color: red">
-                {{ $errors->first('get_mark') }}
-            </span>
-        </div>
-    </div>
-
-    {!! Form::hidden('result_id', $resultId, ['id' => 'result-id']) !!}
-
-    <div class="form-group">
-        <div class="col-sm-12 col-sm-offset-0">
-            {{--<i class="fa fa-plus"></i>--}}
-            {{--{!! Form::submit('Add Subject', ['class' => 'btn btn-primary']) !!}--}}
-            {{--data-url="{{url('/result/student-name-show')}}"--}}
-            {!! Form::button('<i class="fa fa-plus"></i> Add Subject', [
-                                  'data-url' => "{{url('/result/add-to-cart-edit')}}",
-                                  'class'     => 'btn btn-primary add-cart-item-edit',
-                                  'type'      => 'submit',
-                              ]) !!}
-        </div>
-    </div>
-    {!! Form::close() !!}
-</div>
-
-
-
 <div class="col-sm-8">
-    {!! Form::open(['url' => 'result/save-cart-edit', 'method' => 'post']) !!}
-    {!! Form::hidden('result_id', $resultId, ['id' => 'result-id-no-need']) !!}
+    <div>
         <table class="table table-bordered table-striped table-hover">
             <thead>
             <tr>
@@ -66,12 +25,9 @@
                     <td>{{ $item->options->getMarkPercentage }}</td>
                     <td>{{ $item->options->grade }}</td>
                     <td>{!! $item->options->gradePoint !!}</td>
-                    {{--<td style=""><a class="btn btn-danger btn-xs" data-toggle="modal" data-target="#myModal-{{ $key }}">--}}
-                            {{--<i class="fa fa-trash"></i>--}}
-                        {{--</a>--}}
-                    {{--</td>--}}
-                    <td>
-                        {{ Html::link('result/remove-one-subject-edit/'.$resultId.'/'. $key, '', ['class' => 'btn btn-danger btn-xs fa fa-trash delete-cart-item']) }}
+                    <td style=""><a class="btn btn-danger btn-xs" data-toggle="modal" data-target="#myModal-{{ $key }}">
+                            <i class="fa fa-trash"></i>
+                        </a>
                     </td>
 
                     <!-- Modal -->
@@ -89,7 +45,7 @@
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
-                                    {{ Html::link('result/remove-one-subject-edit/'.$resultId.'/'. $key, 'Delete', ['class' => 'btn btn-danger delete-cart-item']) }}
+                                    {{ Html::link('result/remove-one-subject/'. $key, 'Delete', ['class' => 'btn btn-danger']) }}
                                 </div>
                             </div>
                         </div>
@@ -133,5 +89,5 @@
                 </div>
             </div>
         </div>
-    {!! Form::close() !!}
+    </div>
 </div>

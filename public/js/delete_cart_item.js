@@ -17,6 +17,9 @@ $(function() {
         var subjectId = $("#subject-id").val();
         var getMark = $("#get-mark").val();
         var resultId = $("#result-id").val();
+        //var baseUrl = $('#url').html();
+        //console.log(baseUrl);
+        //var url = baseUrl + "/result/add-to-cart-edit";      //kaj kore na
         var url = "http://localhost/rps/public/result/add-to-cart-edit";
         //var url = $(this).attr('data-url');
         console.log(url);

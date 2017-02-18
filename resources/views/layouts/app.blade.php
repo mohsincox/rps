@@ -32,6 +32,9 @@
 
 </head>
 <body>
+    <span  id="url">
+        {{ url('/') }}
+    </span>
     <nav class="navbar navbar-default navbar-static-top">
         <div class="container">
             <div class="navbar-header">
