@@ -111,9 +111,9 @@ class ResultController extends Controller
                       'options' => ['subject' => $subject, 'grade' => $grade, 'gradePoint' => $gradePoint, 'getMarkPercentage' => $getMarkPercentage],
                   ]);
 
-        //return redirect('result/create');
-        $addedList = Cart::instance($this->resultCart)->content();
-        return view('result._partial_create', compact('addedList'));
+        return redirect('result/create');
+//        $addedList = Cart::instance($this->resultCart)->content();
+//        return view('result._partial_create', compact('addedList'));
     }
 
     public function removeOneSubject($id)

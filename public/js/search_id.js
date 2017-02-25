@@ -26,10 +26,10 @@ $(function() {
 
         var url = "http://localhost/rps/public/result/add-to-cart";
         //var url = $(this).attr('data-url');
-        console.log(url);
+        //console.log(url);
         $.post(url, { subject_id: subjectId, get_mark: getMark, _token: $('input[name="_token"]').val() }, function(data){
             $('#result-info-create').html(data);
-            $("#subject-id").val('FFF');
+            //$("#subject-id").val('FFF');
             $("#get-mark").val('');
         });
     });

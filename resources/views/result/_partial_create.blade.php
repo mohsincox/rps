@@ -25,9 +25,12 @@
                     <td>{{ $item->options->getMarkPercentage }}</td>
                     <td>{{ $item->options->grade }}</td>
                     <td>{!! $item->options->gradePoint !!}</td>
-                    <td style=""><a class="btn btn-danger btn-xs" data-toggle="modal" data-target="#myModal-{{ $key }}">
-                            <i class="fa fa-trash"></i>
-                        </a>
+                    {{--<td style=""><a class="btn btn-danger btn-xs" data-toggle="modal" data-target="#myModal-{{ $key }}">--}}
+                            {{--<i class="fa fa-trash"></i>--}}
+                        {{--</a>--}}
+                    {{--</td>--}}
+                    <td>
+                        {{ Html::link('result/remove-one-subject/'. $key, '', ['class' => 'btn btn-danger btn-xs fa fa-trash delete-cart-item']) }}
                     </td>
 
                     <!-- Modal -->

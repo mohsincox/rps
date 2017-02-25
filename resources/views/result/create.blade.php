@@ -8,7 +8,7 @@
     <hr>
     <div class="row">
         <div class="col-sm-4">
-            {!! Form::open(['url' => 'result/add-to-cartp', 'method' => 'post']) !!}
+            {!! Form::open(['url' => 'result/add-to-cart', 'method' => 'post']) !!}
                 <div class="required form-group" {{ $errors->has('subject_id') ? 'has-error' : '' }}>
                     {!! Form::label('subject_id', 'Select Subject', ['class' => 'control-label col-sm-12']) !!}
                     <div class="col-sm-12">
@@ -32,7 +32,7 @@
                         {{--<i class="fa fa-plus"></i>--}}
                         {{--{!! Form::submit('Add Subject', ['class' => 'btn btn-primary']) !!}--}}
                         {!! Form::button('<i class="fa fa-plus"></i> Add Subject', [
-                                              'class'     => 'btn btn-primary add-cart-item-create',
+                                              'class'     => 'btn btn-primary add-cart-item-createe',
                                               'type'      => 'submit',
                                           ]) !!}
                     </div>

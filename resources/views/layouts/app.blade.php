@@ -32,7 +32,7 @@
 
 </head>
 <body>
-    <span  id="url">
+    <span class="hidden" id="url">
         {{ url('/') }}
     </span>
     <nav class="navbar navbar-default navbar-static-top">
